@@ -7,6 +7,9 @@ public class App extends PApplet {
 
   private Tank tank;
 
+  public boolean left = false;
+  public boolean right = false;
+
   public App() {
     this.tank = null;
   }
@@ -22,7 +25,31 @@ public class App extends PApplet {
 
   public void draw() {
     background(0);
-    this.tank.draw(this);
+    this.tank.draw(this, left, right);
+  }
+
+  public void keyPressed() {
+    if (key == CODED) {
+      if (keyCode == LEFT) {
+        left = true;
+      }
+
+      if (keyCode == RIGHT) {
+        right = true;
+      }
+    }
+  }
+
+  public void keyReleased() {
+    if (key == CODED) {
+      if (keyCode == LEFT) {
+        left = false;
+      }
+
+      if (keyCode == RIGHT) {
+        right = false;
+      }
+    }
   }
 
   public static void main(String[] args) {
