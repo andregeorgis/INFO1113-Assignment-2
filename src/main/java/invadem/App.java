@@ -1,6 +1,7 @@
 package invadem;
 
 import processing.core.PApplet;
+import processing.core.PImage;
 import invadem.assets.*;
 
 import java.util.List;
@@ -10,6 +11,7 @@ public class App extends PApplet {
 
   private Tank tank;
   private List<Invader> invaders;
+  private List<Barrier> barriers;
 
   public boolean left = false;
   public boolean right = false;
@@ -17,12 +19,27 @@ public class App extends PApplet {
   public App() {
     this.tank = null;
     this.invaders = new ArrayList<Invader>();
+    this.barriers = new ArrayList<Barrier>();
+
   }
 
   public void setup() {
     frameRate(60);
     this.tank = new Tank(loadImage("tank1.png"));
     this.invaders.add(new Invader(loadImage("invader1.png"), 180, 20));
+
+    List<PImage> topRow = new ArrayList<PImage>();
+    topRow.add(loadImage("barrier_left1.png"));
+    topRow.add(loadImage("barrier_top1.png"));
+    topRow.add(loadImage("barrier_right1.png"));
+    List<PImage> middleRow = new ArrayList<PImage>();
+    middleRow.add(loadImage("barrier_solid1.png"));
+    middleRow.add(loadImage("barrier_solid1.png"));
+    List<PImage> bottomRow = new ArrayList<PImage>();
+    bottomRow.add(loadImage("barrier_solid1.png"));
+    bottomRow.add(loadImage("barrier_solid1.png"));
+
+    this.barriers.add(new Barrier(topRow, middleRow, bottomRow, 308, 400));
   }
 
   public void settings() {
@@ -35,6 +52,11 @@ public class App extends PApplet {
     for(Invader invader : this.invaders) {
       invader.draw(this);
     }
+
+    for(Barrier barrier : this.barriers) {
+      barrier.draw(this);
+    }
+
   }
 
   public void keyPressed() {
