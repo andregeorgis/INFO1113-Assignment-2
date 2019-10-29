@@ -1,27 +1,32 @@
 package invadem;
 
 import processing.core.PApplet;
+import invadem.assets.Tank;
 
 public class App extends PApplet {
 
-    public App() {
-        //Set up your objects
-    }
+  private Tank tank;
 
-    public void setup() {
-        frameRate(60);
-    }
+  public App() {
+    this.tank = null;
+  }
 
-    public void settings() {
-        size(640, 480);
-    }
+  public void setup() {
+    frameRate(60);
+    this.tank = new Tank(loadImage("tank1.png"));
+  }
 
-    public void draw() { 
-        //Main Game Loop
-    }
+  public void settings() {
+    size(640, 480);
+  }
 
-    public static void main(String[] args) {
-        PApplet.main("invadem.App");
-    }
+  public void draw() {
+    background(0);
+    this.tank.draw(this);
+  }
+
+  public static void main(String[] args) {
+    PApplet.main("invadem.App");
+  }
 
 }

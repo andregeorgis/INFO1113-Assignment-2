@@ -18,7 +18,7 @@ public class Tank implements Movable {
   public Tank(PImage img) {
     this.img = img;
     this.x = 309;
-    this.y = 466;
+    this.y = 456;
     this.width = 22;
     this.height = 14;
     this.x_velocity = 1;
