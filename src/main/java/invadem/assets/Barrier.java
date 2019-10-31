@@ -6,7 +6,7 @@ import processing.core.PImage;
 import java.util.List;
 import java.util.ArrayList;
 
-public class Barrier{
+public class Barrier {
   private int x;
   private int y;
 

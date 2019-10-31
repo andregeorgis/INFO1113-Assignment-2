@@ -2,6 +2,7 @@ package invadem;
 
 import processing.core.PApplet;
 import processing.core.PImage;
+import processing.event.KeyEvent;
 import invadem.assets.*;
 
 import java.util.List;
@@ -12,16 +13,23 @@ public class App extends PApplet {
   private Tank tank;
   private List<Invader> invaders;
   private List<Barrier> barriers;
+  private List<Projectile> projectiles;
+  private boolean shootProjectile;
 
   public List<PImage> LEFT_BARRIER_ALL;
   public List<PImage> TOP_BARRIER_ALL;
   public List<PImage> RIGHT_BARRIER_ALL;
   public List<PImage> SOLID_BARRIER_ALL;
 
+  public PImage projectileImage;
+
   public App() {
     this.tank = null;
     this.invaders = new ArrayList<Invader>();
     this.barriers = new ArrayList<Barrier>();
+    this.projectiles = new ArrayList<Projectile>();
+
+    this.shootProjectile = true;
 
     this.LEFT_BARRIER_ALL = new ArrayList<PImage>();
     this.TOP_BARRIER_ALL = new ArrayList<PImage>();
@@ -57,6 +65,8 @@ public class App extends PApplet {
     this.barriers.add(new Barrier(LEFT_BARRIER_ALL, TOP_BARRIER_ALL, RIGHT_BARRIER_ALL, SOLID_BARRIER_ALL, 308, 420));
     this.barriers.add(new Barrier(LEFT_BARRIER_ALL, TOP_BARRIER_ALL, RIGHT_BARRIER_ALL, SOLID_BARRIER_ALL, 200, 420));
     this.barriers.add(new Barrier(LEFT_BARRIER_ALL, TOP_BARRIER_ALL, RIGHT_BARRIER_ALL, SOLID_BARRIER_ALL, 416, 420));
+
+    projectileImage = loadImage("projectile.png");
   }
 
   public void settings() {
@@ -74,29 +84,38 @@ public class App extends PApplet {
       barrier.draw(this);
     }
 
+    for(Projectile projectile : this.projectiles) {
+      projectile.draw(this);
+    }
+
   }
 
-  public void keyPressed() {
-    if (key == CODED) {
-      if (keyCode == LEFT) {
-        this.tank.setLeft(true);
-      }
+  public void keyPressed(KeyEvent e) {
+    if (e.getKeyCode() == 37) {
+      this.tank.setLeft(true);
+    }
 
-      if (keyCode == RIGHT) {
-        this.tank.setRight(true);
-      }
+    if (e.getKeyCode() == 39) {
+      this.tank.setRight(true);
+    }
+
+    if (e.getKeyCode() == 32 && this.shootProjectile == true) {
+      this.projectiles.add(new Projectile(projectileImage, this.tank.getX() + this.tank.getWidth()/2, this.tank.getY()));
+      this.shootProjectile = false;
     }
   }
 
-  public void keyReleased() {
-    if (key == CODED) {
-      if (keyCode == LEFT) {
-        this.tank.setLeft(false);
-      }
+  public void keyReleased(KeyEvent e) {
+    if (e.getKeyCode() == 37) {
+      this.tank.setLeft(false);
+    }
 
-      if (keyCode == RIGHT) {
-        this.tank.setRight(false);
-      }
+    if (e.getKeyCode() == 39) {
+      this.tank.setRight(false);
+    }
+
+    if (e.getKeyCode() == 32) {
+      this.shootProjectile = true;
     }
   }
 
