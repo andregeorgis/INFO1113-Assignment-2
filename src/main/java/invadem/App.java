@@ -13,9 +13,6 @@ public class App extends PApplet {
   private List<Invader> invaders;
   private List<Barrier> barriers;
 
-  public boolean left = false;
-  public boolean right = false;
-
   public App() {
     this.tank = null;
     this.invaders = new ArrayList<Invader>();
@@ -48,7 +45,7 @@ public class App extends PApplet {
 
   public void draw() {
     background(0);
-    this.tank.draw(this, left, right);
+    this.tank.draw(this);
     for(Invader invader : this.invaders) {
       invader.draw(this);
     }
@@ -62,11 +59,11 @@ public class App extends PApplet {
   public void keyPressed() {
     if (key == CODED) {
       if (keyCode == LEFT) {
-        left = true;
+        this.tank.setLeft(true);
       }
 
       if (keyCode == RIGHT) {
-        right = true;
+        this.tank.setRight(true);
       }
     }
   }
@@ -74,11 +71,11 @@ public class App extends PApplet {
   public void keyReleased() {
     if (key == CODED) {
       if (keyCode == LEFT) {
-        left = false;
+        this.tank.setLeft(false);
       }
 
       if (keyCode == RIGHT) {
-        right = false;
+        this.tank.setRight(false);
       }
     }
   }

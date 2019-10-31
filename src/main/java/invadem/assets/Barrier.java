@@ -2,7 +2,7 @@ package invadem.assets;
 
 import processing.core.PApplet;
 import processing.core.PImage;
-import invadem.Movable;
+import invadem.MovableAsset;
 
 import java.util.List;
 

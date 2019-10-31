@@ -2,58 +2,58 @@ package invadem.assets;
 
 import processing.core.PApplet;
 import processing.core.PImage;
-import invadem.Movable;
+import invadem.MovableAsset;
 
-public class Tank {
-  private int x;
-  private int y;
-  private int xVelocity;
-  private int yVelocity;
-  private int health;
+public class Tank extends MovableAsset {
+  public static final int WIDTH = 22;
+  public static final int HEIGHT = 14;
+  public static final int X_INITIAL = 320 - WIDTH/2;
+  public static final int Y_INITIAL = 480 - HEIGHT - 10;
+  public static final int X_VELOCITY_INITIAL = 0;
+  public static final int Y_VELOCITY_INITIAL = 0;
+  public static final int X_BOUND_LEFT = 180;
+  public static final int X_BOUND_RIGHT = 460 - WIDTH;
+  public static final int HEALTH_INITIAL = 1;
 
-  private PImage img;
-
-
-  public final int WIDTH = 22;
-  public final int HEIGHT = 14;
-  public final int X_BOUND_LEFT = 180;
-  public final int X_BOUND_RIGHT = 460 - WIDTH;
+  private boolean left;
+  private boolean right;
 
   public Tank(PImage img) {
-    this.img = img;
-    this.x = 309;
-    this.y = 456;
-    this.xVelocity = 0;
-    this.yVelocity = 0;
-    this.health = 3;
+    super(img, X_INITIAL, Y_INITIAL, WIDTH, HEIGHT, HEALTH_INITIAL, X_VELOCITY_INITIAL, Y_VELOCITY_INITIAL);
+    this.left = false;
+    this.right = false;
   }
 
-  public void draw(PApplet app, boolean left, boolean right) {
-    tick(left, right);
+  public void draw(PApplet app) {
+    tick();
     checkBounds();
-    app.image(this.img, this.x, this.y, this.WIDTH, this.HEIGHT);
+    app.image(this.img, this.x, this.y, this.width, this.height);
   }
 
-  public void tick(boolean left, boolean right) {
-    if (left && right) {
-      this.xVelocity = 0;
-    } else if (right) {
-      this.xVelocity = 1;
-    } else if (left) {
-      this.xVelocity = -1;
+  public void tick() {
+    if (this.left && this.right) {
+      setXVelocity(0);
+    } else if (this.right) {
+      setXVelocity(1);
+    } else if (this.left) {
+      setXVelocity(-1);
     } else {
-      this.xVelocity = 0;
+      setXVelocity(0);
     }
-    this.x += this.xVelocity;
+    changeX();
   }
 
   public void checkBounds() {
-    if (this.x < this.X_BOUND_LEFT) {
-      this.x = this.X_BOUND_LEFT;
+    if (this.x < X_BOUND_LEFT) {
+      this.x = X_BOUND_LEFT;
     }
 
-    if (this.x > this.X_BOUND_RIGHT) {
-      this.x = this.X_BOUND_RIGHT;
+    if (this.x > X_BOUND_RIGHT) {
+      this.x = X_BOUND_RIGHT;
     }
   }
+
+  public void setLeft(boolean state) {this.left = state;}
+
+  public void setRight(boolean state) {this.right = state;}
 }
