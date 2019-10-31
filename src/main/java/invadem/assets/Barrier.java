@@ -2,40 +2,45 @@ package invadem.assets;
 
 import processing.core.PApplet;
 import processing.core.PImage;
-import invadem.MovableAsset;
 
 import java.util.List;
+import java.util.ArrayList;
 
-public class Barrier {
+public class Barrier extends PApplet {
   private int x;
   private int y;
 
-  private List<PImage> topRow;
-  private List<PImage> middleRow;
-  private List<PImage> bottomRow;
+  private List<BarrierComponent> topRow;
+  private List<BarrierComponent> middleRow;
+  private List<BarrierComponent> bottomRow;
 
-  public final int WIDTH_INDIVIDUAL = 8;
-  public final int HEIGHT_INDIVIDUAL = 8;
+  public Barrier(List<PImage> left, List<PImage> top, List<PImage> right, List<PImage> solid, int x, int y) {
+    this.topRow = new ArrayList<BarrierComponent>();
+    this.topRow.add(new BarrierComponent(left, x, y));
+    this.topRow.add(new BarrierComponent(top, x + 8, y));
+    this.topRow.add(new BarrierComponent(right, x + 16, y));
+    this.middleRow = new ArrayList<BarrierComponent>();
+    this.middleRow.add(new BarrierComponent(solid, x, y + 8));
+    this.middleRow.add(new BarrierComponent(solid, x + 16, y + 8));
+    this.bottomRow = new ArrayList<BarrierComponent>();
+    this.bottomRow.add(new BarrierComponent(solid, x, y + 16));
+    this.bottomRow.add(new BarrierComponent(solid, x + 16, y + 16));
 
-  public Barrier(List<PImage> topRow, List<PImage> middleRow, List<PImage> bottomRow, int x, int y) {
-    this.topRow = topRow;
-    this.middleRow = middleRow;
-    this.bottomRow = bottomRow;
     this.x = x;
     this.y = y;
   }
 
   public void draw(PApplet app) {
-    for (int i = 0; i < 3; i++) {
-      app.image(this.topRow.get(i), this.x + i * 8, this.y, this.WIDTH_INDIVIDUAL, this.HEIGHT_INDIVIDUAL);
+    for (BarrierComponent component : topRow) {
+      component.draw(app);
     }
 
-    for (int i = 0; i < 2; i++) {
-      app.image(this.middleRow.get(i), this.x + i * 16, this.y + 8, this.WIDTH_INDIVIDUAL, this.HEIGHT_INDIVIDUAL);
+    for (BarrierComponent component : middleRow) {
+      component.draw(app);
     }
 
-    for (int i = 0; i < 2; i++) {
-      app.image(this.bottomRow.get(i), this.x + i * 16, this.y + 16, this.WIDTH_INDIVIDUAL, this.HEIGHT_INDIVIDUAL);
+    for (BarrierComponent component : bottomRow) {
+      component.draw(app);
     }
 
   }
