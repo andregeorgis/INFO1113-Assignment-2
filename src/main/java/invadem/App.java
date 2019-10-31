@@ -10,6 +10,9 @@ import java.util.ArrayList;
 
 public class App extends PApplet {
 
+  public static final int WIDTH = 640;
+  public static final int HEIGHT = 480;
+
   private Tank tank;
   private List<Invader> invaders;
   private List<Barrier> barriers;
@@ -70,7 +73,7 @@ public class App extends PApplet {
   }
 
   public void settings() {
-    size(640, 480);
+    size(WIDTH, HEIGHT);
   }
 
   public void draw() {
@@ -86,6 +89,14 @@ public class App extends PApplet {
 
     for(Projectile projectile : this.projectiles) {
       projectile.draw(this);
+    }
+
+    for (int i = 0; i < projectiles.size(); i++) {
+      if (isProjectileOutside(projectiles.get(i))) {
+        System.out.println("Projectile Removed!");
+        projectiles.remove(i);
+        i--;
+      }
     }
 
   }
@@ -117,6 +128,10 @@ public class App extends PApplet {
     if (e.getKeyCode() == 32) {
       this.shootProjectile = true;
     }
+  }
+
+  public boolean isProjectileOutside(Projectile projectile) {
+    return projectile.getY() < -10;
   }
 
   public static void main(String[] args) {
