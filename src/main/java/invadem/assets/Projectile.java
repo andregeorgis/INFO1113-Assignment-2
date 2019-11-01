@@ -34,7 +34,7 @@ public class Projectile extends MovableAsset {
   }
 
   public boolean isProjectileOutside() {
-    return getY() < -10;
+    return getY() < -10 || getY() > 490;
   }
 
   public boolean checkCollisionWithAsset(DrawableAsset asset) {
