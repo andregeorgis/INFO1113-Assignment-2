@@ -182,7 +182,6 @@ public class Barrier extends AssetGroup {
     }
   }
 
-
   public void checkCollisionwithProjectile(Projectile projectile) {
     if (!(projectile.getY() + projectile.getHeight() > this.yBottom || (projectile.getY() < this.yTop)) &&
         !(projectile.getX() + projectile.getWidth() > this.xRight || (projectile.getX() < this.xLeft))) {

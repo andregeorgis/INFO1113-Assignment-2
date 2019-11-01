@@ -28,6 +28,7 @@ public class App extends PApplet {
   public static List<PImage> topBarrierAllImgs;
   public static List<PImage> rightBarrierAllImgs;
   public static List<PImage> solidBarrierAllImgs;
+  public static List<PImage> invaderAllImgs;
   public static PImage nextLevelImg;
   public static PImage gameOverImg;
   public PImage projectileImg;
@@ -46,6 +47,7 @@ public class App extends PApplet {
     this.topBarrierAllImgs = new ArrayList<PImage>();
     this.rightBarrierAllImgs = new ArrayList<PImage>();
     this.solidBarrierAllImgs = new ArrayList<PImage>();
+    this.invaderAllImgs = new ArrayList<PImage>();
     this.nextLevelImg = null;
     this.gameOverImg = null;
   }
@@ -53,7 +55,10 @@ public class App extends PApplet {
   public void setup() {
     frameRate(60);
     this.tank = new Tank(loadImage("tank1.png"));
-    this.swarm = new InvaderSwarm(loadImage("invader1.png"));
+
+    this.invaderAllImgs.add(loadImage("invader1.png"));
+    this.invaderAllImgs.add(loadImage("invader2.png"));
+    this.swarm = new InvaderSwarm(invaderAllImgs);
 
     this.leftBarrierAllImgs.add(loadImage("barrier_left1.png"));
     this.leftBarrierAllImgs.add(loadImage("barrier_left2.png"));

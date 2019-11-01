@@ -4,6 +4,8 @@ import processing.core.PApplet;
 import processing.core.PImage;
 import invadem.MovableAsset;
 
+import java.util.List;
+
 public class Invader extends MovableAsset {
   public static final int WIDTH = 16;
   public static final int HEIGHT = 16;
@@ -18,8 +20,8 @@ public class Invader extends MovableAsset {
   private boolean makeStep;
   private boolean alive;
 
-  public Invader(PImage img, int x, int y) {
-    super(img, x, y, WIDTH, HEIGHT, HEALTH_INITIAL, X_VELOCITY_INITIAL, Y_VELOCITY_INITIAL);
+  public Invader(List<PImage> allImgs, int x, int y) {
+    super(allImgs, x, y, WIDTH, HEIGHT, HEALTH_INITIAL, X_VELOCITY_INITIAL, Y_VELOCITY_INITIAL);
     this.stepCounter = 0;
     this.movingDown = false;
     this.movingRight = true;
@@ -52,19 +54,21 @@ public class Invader extends MovableAsset {
       this.movingDown = true;
       setYVelocity(1);
       setXVelocity(0);
+      changeImage(1);
       this.stepCounter = 0;
     } else if (this.movingDown && this.stepCounter == 8) {
+      this.movingDown = false;
+      changeImage(0);
+
       if (this.movingRight) {
         setXVelocity(-1);
         setYVelocity(0);
         this.movingRight = false;
-        this.movingDown = false;
         this.movingLeft = true;
       } else if (this.movingLeft) {
         setXVelocity(1);
         setYVelocity(0);
         this.movingRight = true;
-        this.movingDown = false;
         this.movingLeft = false;
       }
       this.stepCounter = 0;
@@ -87,7 +91,7 @@ public class Invader extends MovableAsset {
   }
 
   public void reset(int x, int y) {
-    changeImage(this.backupImg);
+    changeImage(0);
     this.alive = true;
     this.x = x;
     this.y = y;

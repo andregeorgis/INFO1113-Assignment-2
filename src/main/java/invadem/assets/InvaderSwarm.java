@@ -18,13 +18,13 @@ public class InvaderSwarm extends AssetGroup {
   public static final int HEIGHT = 100;
   public static final int GAP = 12;
 
-  public InvaderSwarm(PImage img) {
+  public InvaderSwarm(List<PImage> imgs) {
     super(X_INITIAL, Y_INITIAL, WIDTH, HEIGHT, 4, 10, Invader.WIDTH, Invader.HEIGHT);
     this.invaders = new ArrayList<Invader>();
 
     for (int i = 0; i < 4; i++) {
       for (int j = 0; j < 10; j++) {
-        this.invaders.add(new Invader(img, X_INITIAL + j * (GAP + Invader.WIDTH), Y_INITIAL + i * (GAP + Invader.HEIGHT)));
+        this.invaders.add(new Invader(imgs, X_INITIAL + j * (GAP + Invader.WIDTH), Y_INITIAL + i * (GAP + Invader.HEIGHT)));
       }
     }
   }

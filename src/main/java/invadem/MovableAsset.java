@@ -4,12 +4,20 @@ import processing.core.PImage;
 
 import invadem.DrawableAsset;
 
+import java.util.List;
+
 public abstract class MovableAsset extends DrawableAsset {
   protected int xVelocity;
   protected int yVelocity;
 
   public MovableAsset(PImage img, int x, int y, int width, int height, int health, int xVelocity, int yVelocity) {
     super(img, x, y, width, height, health);
+    this.xVelocity = xVelocity;
+    this.yVelocity = yVelocity;
+  }
+
+  public MovableAsset(List<PImage> allImgs, int x, int y, int width, int height, int health, int xVelocity, int yVelocity) {
+    super(allImgs, x, y, width, height, health);
     this.xVelocity = xVelocity;
     this.yVelocity = yVelocity;
   }

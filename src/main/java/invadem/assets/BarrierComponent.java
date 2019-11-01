@@ -12,13 +12,11 @@ public class BarrierComponent extends DrawableAsset {
   public static final int HEALTH_INITIAL = 3;
 
   private int imgIndex;
-  private List<PImage> allImg;
   private boolean alive;
 
-  public BarrierComponent(List<PImage> allImg, int x, int y) {
-    super(allImg.get(0), x, y, WIDTH, HEIGHT, HEALTH_INITIAL);
+  public BarrierComponent(List<PImage> allImgs, int x, int y) {
+    super(allImgs, x, y, WIDTH, HEIGHT, HEALTH_INITIAL);
     this.imgIndex = 0;
-    this.allImg = allImg;
     this.alive = true;
   }
 
@@ -34,14 +32,14 @@ public class BarrierComponent extends DrawableAsset {
       this.img = null;
       this.alive = false;
     } else {
-      this.img = this.allImg.get(this.imgIndex);
+      changeImage(this.imgIndex);
     }
   }
 
   public boolean isAlive() {return this.alive;}
 
   public void reset() {
-    changeImage(this.backupImg);
+    changeImage(0);
     this.alive = true;
     this.health = 3;
   }
