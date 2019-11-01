@@ -23,9 +23,8 @@ public class BarrierComponent extends DrawableAsset {
   }
 
   public void draw(PApplet app) {
-    if (img != null) {
+    if (isAlive()) {
       app.image(this.img, this.x, this.y, this.width, this.height);
-      checkHealth();
     }
   }
 
@@ -33,6 +32,7 @@ public class BarrierComponent extends DrawableAsset {
     this.imgIndex = 3 - this.health;
     if (this.imgIndex == 3) {
       this.img = null;
+      this.alive = false;
     } else {
       this.img = this.allImg.get(this.imgIndex);
     }
@@ -43,5 +43,6 @@ public class BarrierComponent extends DrawableAsset {
   public void reset() {
     changeImage(this.backupImg);
     this.alive = true;
+    this.health = 3;
   }
 }

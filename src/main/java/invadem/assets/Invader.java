@@ -75,6 +75,12 @@ public class Invader extends MovableAsset {
 
   public boolean isAlive() {return this.alive;}
 
+  public void checkHealth() {
+    if (this.health == 0) {
+      kill();
+    }
+  }
+
   public void kill() {
     changeImage(null);
     this.alive = false;
@@ -93,5 +99,6 @@ public class Invader extends MovableAsset {
     this.movingLeft = false;
     this.makeStep = true;
     this.alive = true;
+    this.health = 1;
   }
 }

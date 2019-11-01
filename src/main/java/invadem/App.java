@@ -83,12 +83,19 @@ public class App extends PApplet {
     this.swarm.draw(this);
 
     for(Barrier barrier : this.barriers) {
-      barrier.draw(this);
+      if (!barrier.isBroken()) {
+        barrier.draw(this);
+      }
     }
 
     for(Projectile projectile : this.projectiles) {
       projectile.draw(this);
       this.swarm.checkCollisionwithProjectile(projectile);
+      for(Barrier barrier : this.barriers) {
+        if (!barrier.isBroken()) {
+          barrier.checkCollisionwithProjectile(projectile);
+        }
+      }
     }
 
     for (int i = 0; i < projectiles.size(); i++) {
@@ -98,7 +105,7 @@ public class App extends PApplet {
       }
     }
 
-    if (this.swarm.numOfInvaders() == 0) {
+    if (this.swarm.isDead()) {
       nextLevel();
     }
 
