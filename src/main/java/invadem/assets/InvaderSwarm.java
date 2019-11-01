@@ -67,11 +67,6 @@ public class InvaderSwarm extends AssetGroup {
     return sum;
   }
 
-  public void killInvader(Invader invader) {
-    invader.kill();
-    checkBoundaries();
-  }
-
   public void checkBoundaries() {
     int i;
 
@@ -121,6 +116,8 @@ public class InvaderSwarm extends AssetGroup {
       }
     }
 
+    System.out.println(i);
+
     if (i == 10) {
       this.bottomRow--;
       this.yBottom -= this.assetHeight + GAP;
@@ -128,13 +125,20 @@ public class InvaderSwarm extends AssetGroup {
   }
 
   public void checkCollisionwithProjectile(Projectile projectile) {
+    boolean invaderKilled = false;
+
     if (!(projectile.getY() + projectile.getHeight() > this.yBottom || (projectile.getY() < this.yTop)) &&
         !(projectile.getX() + projectile.getWidth() > this.xRight || (projectile.getX() < this.xLeft))) {
       for (Invader invader : this.invaders) {
         if (invader.isAlive() && projectile.checkCollisionWithAsset(invader)) {
           invader.checkHealth();
+          invaderKilled = true;
         }
       }
+    }
+
+    if (invaderKilled) {
+      checkBoundaries();
     }
   }
 
@@ -157,4 +161,6 @@ public class InvaderSwarm extends AssetGroup {
   }
 
   public boolean isDead() {return numOfInvaders() == 0;}
+
+  public int getBottom() {return this.yBottom;}
 }
