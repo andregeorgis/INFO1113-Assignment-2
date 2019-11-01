@@ -50,4 +50,18 @@ public class Barrier {
     }
 
   }
+
+  public void reset() {
+    for (BarrierComponent component : topRow) {
+      component.reset();
+    }
+
+    for (BarrierComponent component : middleRow) {
+      component.reset();
+    }
+
+    for (BarrierComponent component : bottomRow) {
+      component.reset();
+    }
+  }
 }

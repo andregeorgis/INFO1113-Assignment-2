@@ -30,6 +30,10 @@ public class Projectile extends MovableAsset {
     changeY();
   }
 
+  public boolean isProjectileOutside() {
+    return getY() < -10;
+  }
+
   public boolean checkCollisionWithInvader(Invader invader) {
     if (this.x < (invader.getX() + invader.getWidth()) &&
         (this.x + this.width) > invader.getX() &&

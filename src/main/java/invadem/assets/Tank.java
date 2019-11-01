@@ -56,4 +56,12 @@ public class Tank extends MovableAsset {
   public void setLeft(boolean state) {this.left = state;}
 
   public void setRight(boolean state) {this.right = state;}
+
+  public void reset() {
+    this.x = X_INITIAL;
+    this.y = Y_INITIAL;
+    this.health = HEALTH_INITIAL;
+    this.xVelocity = X_VELOCITY_INITIAL;
+    this.yVelocity = Y_VELOCITY_INITIAL;
+  }
 }

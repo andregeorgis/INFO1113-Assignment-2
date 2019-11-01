@@ -18,7 +18,7 @@ public class App extends PApplet {
   private List<Barrier> barriers;
   private List<Projectile> projectiles;
   private boolean shootProjectile;
-  private int invaderShootCounter;
+  //private int invaderShootCounter;
 
   public List<PImage> LEFT_BARRIER_ALL;
   public List<PImage> TOP_BARRIER_ALL;
@@ -74,7 +74,7 @@ public class App extends PApplet {
   }
 
   public void draw() {
-    invaderShootCounter++;
+    //invaderShootCounter++;
 
     background(0);
 
@@ -92,10 +92,14 @@ public class App extends PApplet {
     }
 
     for (int i = 0; i < projectiles.size(); i++) {
-      if (isProjectileOutside(projectiles.get(i))) {
+      if (projectiles.get(i).isProjectileOutside()) {
         projectiles.remove(i);
         i--;
       }
+    }
+
+    if (this.swarm.numOfInvaders() == 0) {
+      nextLevel();
     }
 
   }
@@ -129,8 +133,13 @@ public class App extends PApplet {
     }
   }
 
-  public boolean isProjectileOutside(Projectile projectile) {
-    return projectile.getY() < -10;
+  public void nextLevel() {
+    this.tank.reset();
+    this.swarm.reset();
+    for (Barrier barrier : this.barriers) {
+      barrier.reset();
+    }
+    this.projectiles.clear();
   }
 
   public static void main(String[] args) {

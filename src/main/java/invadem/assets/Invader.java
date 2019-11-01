@@ -79,4 +79,19 @@ public class Invader extends MovableAsset {
     changeImage(null);
     this.alive = false;
   }
+
+  public void reset(int x, int y) {
+    changeImage(this.backupImg);
+    this.alive = true;
+    this.x = x;
+    this.y = y;
+    this.xVelocity = X_VELOCITY_INITIAL;
+    this.yVelocity = Y_VELOCITY_INITIAL;
+    this.stepCounter = 0;
+    this.movingDown = false;
+    this.movingRight = true;
+    this.movingLeft = false;
+    this.makeStep = true;
+    this.alive = true;
+  }
 }

@@ -71,7 +71,15 @@ public class InvaderSwarm {
     this.yBottom += changeY;
   }
 
-  public int numOfInvaders() {return this.invaders.size();}
+  public int numOfInvaders() {
+    int sum = 0;
+    for (Invader invader : this.invaders) {
+      if (invader.isAlive()) {
+        sum++;
+      }
+    }
+    return sum;
+  }
 
   public void killInvader(Invader invader) {
     invader.kill();
@@ -102,7 +110,7 @@ public class InvaderSwarm {
     }
 
     if (i == 4) {
-      this.rightCol++;
+      this.rightCol--;
       this.xRight -= 28;
     }
 
@@ -141,5 +149,23 @@ public class InvaderSwarm {
         }
       }
     }
+  }
+
+  public void reset() {
+    for (int i = 0; i < 4; i++) {
+      for (int j = 0; j < 10; j++) {
+        this.invaders.get(i * 10 + j).reset(X_INITIAL + j * 28, Y_INITIAL + i * 28);
+      }
+    }
+
+    this.leftCol = 0;
+    this.rightCol = 9;
+    this.topRow = 0;
+    this.bottomRow = 3;
+
+    this.xLeft = X_INITIAL;
+    this.xRight = X_INITIAL + WIDTH;
+    this.yTop = Y_INITIAL;
+    this.yBottom = Y_INITIAL + HEIGHT;
   }
 }

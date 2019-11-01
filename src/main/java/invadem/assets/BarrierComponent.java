@@ -39,4 +39,9 @@ public class BarrierComponent extends DrawableAsset {
   }
 
   public boolean isAlive() {return this.alive;}
+
+  public void reset() {
+    changeImage(this.backupImg);
+    this.alive = true;
+  }
 }

@@ -10,6 +10,7 @@ public abstract class DrawableAsset {
   protected int height;
   protected int health;
   protected PImage img;
+  protected PImage backupImg;
 
   public DrawableAsset(PImage img, int x, int y, int width, int height, int health) {
     this.x = x;
@@ -17,6 +18,7 @@ public abstract class DrawableAsset {
     this.width = width;
     this.height = height;
     this.img = img;
+    this.backupImg = img;
     this.health = health;
   }
 
