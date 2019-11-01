@@ -13,11 +13,13 @@ public class BarrierComponent extends DrawableAsset {
 
   private int imgIndex;
   private List<PImage> allImg;
+  private boolean alive;
 
   public BarrierComponent(List<PImage> allImg, int x, int y) {
     super(allImg.get(0), x, y, WIDTH, HEIGHT, HEALTH_INITIAL);
     this.imgIndex = 0;
     this.allImg = allImg;
+    this.alive = true;
   }
 
   public void draw(PApplet app) {
@@ -35,4 +37,6 @@ public class BarrierComponent extends DrawableAsset {
       this.img = this.allImg.get(this.imgIndex);
     }
   }
+
+  public boolean isAlive() {return this.alive;}
 }

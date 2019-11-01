@@ -16,6 +16,7 @@ public class Invader extends MovableAsset {
   private boolean movingRight;
   private boolean movingLeft;
   private boolean makeStep;
+  private boolean alive;
 
   public Invader(PImage img, int x, int y) {
     super(img, x, y, WIDTH, HEIGHT, HEALTH_INITIAL, X_VELOCITY_INITIAL, Y_VELOCITY_INITIAL);
@@ -24,6 +25,7 @@ public class Invader extends MovableAsset {
     this.movingRight = true;
     this.movingLeft = false;
     this.makeStep = true;
+    this.alive = true;
   }
 
   public void draw(PApplet app) {
@@ -70,4 +72,11 @@ public class Invader extends MovableAsset {
   }
 
   public void takeStep() {stepCounter++;}
+
+  public boolean isAlive() {return this.alive;}
+
+  public void kill() {
+    changeImage(null);
+    this.alive = false;
+  }
 }

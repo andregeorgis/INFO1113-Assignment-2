@@ -32,15 +32,21 @@ public class Barrier {
 
   public void draw(PApplet app) {
     for (BarrierComponent component : topRow) {
-      component.draw(app);
+      if (component.isAlive()) {
+        component.draw(app);
+      }
     }
 
     for (BarrierComponent component : middleRow) {
-      component.draw(app);
+      if (component.isAlive()) {
+        component.draw(app);
+      }
     }
 
     for (BarrierComponent component : bottomRow) {
-      component.draw(app);
+      if (component.isAlive()) {
+        component.draw(app);
+      }
     }
 
   }

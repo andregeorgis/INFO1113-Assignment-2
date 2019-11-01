@@ -25,9 +25,9 @@ public class Tank extends MovableAsset {
   }
 
   public void draw(PApplet app) {
-    tick();
     checkBounds();
     app.image(this.img, this.x, this.y, this.width, this.height);
+    tick();
   }
 
   public void tick() {

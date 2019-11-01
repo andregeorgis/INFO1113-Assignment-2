@@ -14,10 +14,11 @@ public class App extends PApplet {
   public static final int HEIGHT = 480;
 
   private Tank tank;
-  private List<Invader> invaders;
+  private InvaderSwarm swarm;
   private List<Barrier> barriers;
   private List<Projectile> projectiles;
   private boolean shootProjectile;
+  private int invaderShootCounter;
 
   public List<PImage> LEFT_BARRIER_ALL;
   public List<PImage> TOP_BARRIER_ALL;
@@ -28,7 +29,7 @@ public class App extends PApplet {
 
   public App() {
     this.tank = null;
-    this.invaders = new ArrayList<Invader>();
+    this.swarm = null;
     this.barriers = new ArrayList<Barrier>();
     this.projectiles = new ArrayList<Projectile>();
 
@@ -43,11 +44,7 @@ public class App extends PApplet {
   public void setup() {
     frameRate(60);
     this.tank = new Tank(loadImage("tank1.png"));
-    for (int i = 0; i < 4; i++) {
-      for (int j = 0; j < 10; j++) {
-        this.invaders.add(new Invader(loadImage("invader1.png"), 171 + j * 28, 20 + i * 28));
-      }
-    }
+    this.swarm = new InvaderSwarm(loadImage("invader1.png"));
 
     this.LEFT_BARRIER_ALL.add(loadImage("barrier_left1.png"));
     this.LEFT_BARRIER_ALL.add(loadImage("barrier_left2.png"));
@@ -77,11 +74,13 @@ public class App extends PApplet {
   }
 
   public void draw() {
+    invaderShootCounter++;
+
     background(0);
+
     this.tank.draw(this);
-    for(Invader invader : this.invaders) {
-      invader.draw(this);
-    }
+
+    this.swarm.draw(this);
 
     for(Barrier barrier : this.barriers) {
       barrier.draw(this);
@@ -89,11 +88,11 @@ public class App extends PApplet {
 
     for(Projectile projectile : this.projectiles) {
       projectile.draw(this);
+      this.swarm.checkCollisionwithProjectile(projectile);
     }
 
     for (int i = 0; i < projectiles.size(); i++) {
       if (isProjectileOutside(projectiles.get(i))) {
-        System.out.println("Projectile Removed!");
         projectiles.remove(i);
         i--;
       }
