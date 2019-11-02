@@ -12,7 +12,6 @@ import java.util.Random;
 public class InvaderSwarm extends AssetGroup {
 
   private List<Invader> invaders;
-  private List<Projectile> invaderProjectiles;
   private int projectileTimer;
   private int projectileRate;
   private PImage projectileImg;
@@ -34,7 +33,6 @@ public class InvaderSwarm extends AssetGroup {
       }
     }
 
-    this.invaderProjectiles = new ArrayList<Projectile>();
     this.projectileTimer = 0;
     this.projectileRate = PROJECTILE_RATE_INITIAL;
     this.projectileImg = projectileImg;
@@ -64,25 +62,16 @@ public class InvaderSwarm extends AssetGroup {
       }
     }
 
-    for (Projectile projectile : this.invaderProjectiles) {
-      projectile.draw(app);
-    }
-
-    for (int i = 0; i < this.invaderProjectiles.size(); i++) {
-      if (this.invaderProjectiles.get(i).isProjectileOutside()) {
-        this.invaderProjectiles.remove(i);
-        i--;
-      }
-    }
-
     this.xLeft += changeX;
     this.xRight += changeX;
     this.yTop += changeY;
     this.yBottom += changeY;
+  }
 
+  public void checkIfShoot(CurrentProjectiles projectiles) {
     if (this.projectileTimer == this.projectileRate) {
       this.projectileTimer = 0;
-      shootProjectile();
+      shootProjectile(projectiles);
     }
   }
 
@@ -153,7 +142,7 @@ public class InvaderSwarm extends AssetGroup {
     }
   }
 
-  public void checkCollisionwithProjectile(Projectile projectile) {
+  public void checkCollisionWithProjectile(Projectile projectile) {
     boolean invaderKilled = false;
 
     if (!(projectile.getY() + projectile.getHeight() > this.yBottom || (projectile.getY() < this.yTop)) &&
@@ -193,7 +182,7 @@ public class InvaderSwarm extends AssetGroup {
 
   public int getBottom() {return this.yBottom;}
 
-  public void shootProjectile() {
+  public void shootProjectile(CurrentProjectiles projectiles) {
     List<Integer> temp = new ArrayList<Integer>();
 
     for (int i = 0; i < 40; i++) {
@@ -207,8 +196,6 @@ public class InvaderSwarm extends AssetGroup {
     int projectileX = this.invaders.get(randInt).getX() + this.assetWidth / 2;
     int projectileY = this.invaders.get(randInt).getY() + this.assetHeight;
 
-    Projectile projectile = new Projectile(this.projectileImg, projectileX, projectileY);
-    projectile.setYVelocity(1);
-    this.invaderProjectiles.add(projectile);
+    projectiles.addProjectile(projectileX, projectileY, false);
   }
 }

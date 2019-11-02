@@ -13,7 +13,7 @@ public class Tank extends MovableAsset {
   public static final int Y_VELOCITY_INITIAL = 0;
   public static final int X_BOUND_LEFT = 180;
   public static final int X_BOUND_RIGHT = 460 - WIDTH;
-  public static final int HEALTH_INITIAL = 1;
+  public static final int HEALTH_INITIAL = 3;
 
   private boolean left;
   private boolean right;
@@ -64,4 +64,6 @@ public class Tank extends MovableAsset {
     this.xVelocity = X_VELOCITY_INITIAL;
     this.yVelocity = Y_VELOCITY_INITIAL;
   }
+
+  public boolean isDead() {return this.health <= 0;}
 }

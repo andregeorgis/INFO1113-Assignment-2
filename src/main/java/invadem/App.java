@@ -17,12 +17,11 @@ public class App extends PApplet {
   private Tank tank;
   private InvaderSwarm swarm;
   private List<Barrier> barriers;
-  private List<Projectile> projectiles;
+  private CurrentProjectiles projectiles;
   private boolean shootProjectile;
   private boolean nextLevel;
   private boolean gameOver;
   private int frameCounter;
-  //private int invaderShootCounter;
 
   public static List<PImage> leftBarrierAllImgs;
   public static List<PImage> topBarrierAllImgs;
@@ -37,7 +36,7 @@ public class App extends PApplet {
     this.tank = null;
     this.swarm = null;
     this.barriers = new ArrayList<Barrier>();
-    this.projectiles = new ArrayList<Projectile>();
+    this.projectiles = null;
     this.shootProjectile = true;
     this.nextLevel = false;
     this.gameOver = false;
@@ -57,8 +56,8 @@ public class App extends PApplet {
     this.tank = new Tank(loadImage("tank1.png"));
 
     this.projectileImg = loadImage("projectile.png");
-    this.nextLevelImg = loadImage("nextlevel.png");
-    this.gameOverImg = loadImage("gameover.png");
+
+    this.projectiles = new CurrentProjectiles(this.projectileImg);
 
     this.invaderAllImgs.add(loadImage("invader1.png"));
     this.invaderAllImgs.add(loadImage("invader2.png"));
@@ -83,6 +82,9 @@ public class App extends PApplet {
     this.barriers.add(new Barrier(leftBarrierAllImgs, topBarrierAllImgs, rightBarrierAllImgs, solidBarrierAllImgs, 308, BARRIER_TOP));
     this.barriers.add(new Barrier(leftBarrierAllImgs, topBarrierAllImgs, rightBarrierAllImgs, solidBarrierAllImgs, 200, BARRIER_TOP));
     this.barriers.add(new Barrier(leftBarrierAllImgs, topBarrierAllImgs, rightBarrierAllImgs, solidBarrierAllImgs, 416, BARRIER_TOP));
+
+    this.nextLevelImg = loadImage("nextlevel.png");
+    this.gameOverImg = loadImage("gameover.png");
   }
 
   public void settings() {
@@ -90,8 +92,6 @@ public class App extends PApplet {
   }
 
   public void draw() {
-    //invaderShootCounter++;
-
     background(0);
 
     if (this.nextLevel) {
@@ -112,6 +112,7 @@ public class App extends PApplet {
       this.tank.draw(this);
 
       this.swarm.draw(this);
+      this.swarm.checkIfShoot(this.projectiles);
 
       for(Barrier barrier : this.barriers) {
         if (!barrier.isBroken()) {
@@ -119,32 +120,18 @@ public class App extends PApplet {
         }
       }
 
-      for(Projectile projectile : this.projectiles) {
-        projectile.draw(this);
-        this.swarm.checkCollisionwithProjectile(projectile);
-        for(Barrier barrier : this.barriers) {
-          if (!barrier.isBroken()) {
-            barrier.checkCollisionwithProjectile(projectile);
-          }
-        }
-      }
+      this.projectiles.draw(this);
+      this.projectiles.checkCollisions(this.swarm, this.tank, this.barriers);
+      this.projectiles.checkIfProjectilesOutside();
 
-      for (int i = 0; i < projectiles.size(); i++) {
-        if (projectiles.get(i).isProjectileOutside()) {
-          projectiles.remove(i);
-          i--;
-        }
+      if (this.tank.isDead() || this.swarm.getBottom() >= BARRIER_TOP - 10) {
+        endGame();
       }
 
       if (this.swarm.isDead()) {
         nextLevel();
       }
-
-      if (this.swarm.getBottom() >= BARRIER_TOP - 10) {
-        endGame();
-      }
     }
-
   }
 
   public void keyPressed(KeyEvent e) {
@@ -157,7 +144,7 @@ public class App extends PApplet {
     }
 
     if (e.getKeyCode() == 32 && this.shootProjectile == true) {
-      this.projectiles.add(new Projectile(projectileImg, this.tank.getX() + this.tank.getWidth()/2, this.tank.getY()));
+      this.projectiles.addProjectile(this.tank.getX() + this.tank.getWidth()/2, this.tank.getY(), true);
       this.shootProjectile = false;
     }
   }
@@ -192,7 +179,7 @@ public class App extends PApplet {
     for (Barrier barrier : this.barriers) {
       barrier.reset();
     }
-    this.projectiles.clear();
+    this.projectiles.reset();
   }
 
   public static void main(String[] args) {
