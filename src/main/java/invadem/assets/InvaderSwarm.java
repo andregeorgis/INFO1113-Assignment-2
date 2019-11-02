@@ -134,8 +134,6 @@ public class InvaderSwarm extends AssetGroup {
       }
     }
 
-    System.out.println(i);
-
     if (i == 10) {
       this.bottomRow--;
       this.yBottom -= this.assetHeight + GAP;
