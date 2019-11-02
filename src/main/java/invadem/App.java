@@ -165,17 +165,18 @@ public class App extends PApplet {
 
   public void nextLevel() {
     reset();
+    this.swarm.nextLevel();
     this.nextLevel = true;
   }
 
   public void endGame() {
     reset();
+    this.swarm.endGame();
     this.gameOver = true;
   }
 
   public void reset() {
     this.tank.reset();
-    this.swarm.reset();
     for (Barrier barrier : this.barriers) {
       barrier.reset();
     }

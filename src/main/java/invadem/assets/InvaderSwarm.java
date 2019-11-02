@@ -176,6 +176,18 @@ public class InvaderSwarm extends AssetGroup {
     this.yBottom = Y_INITIAL + HEIGHT;
   }
 
+  public void nextLevel() {
+    reset();
+    if (this.projectileRate != 60) {
+      this.projectileRate -= 60;
+    }
+  }
+
+  public void endGame() {
+    reset();
+    this.projectileRate = 300;
+  }
+
   public boolean isDead() {return numOfInvaders() == 0;}
 
   public int getBottom() {return this.yBottom;}
