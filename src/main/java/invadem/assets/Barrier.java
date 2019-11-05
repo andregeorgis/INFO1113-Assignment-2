@@ -182,7 +182,7 @@ public class Barrier extends AssetGroup {
     }
   }
 
-  public void checkCollisionWithProjectile(Projectile projectile) {
+  public int checkCollisionWithProjectile(Projectile projectile) {
     if (!(projectile.getY() + projectile.getHeight() > this.yBottom || (projectile.getY() < this.yTop)) &&
         !(projectile.getX() + projectile.getWidth() > this.xRight || (projectile.getX() < this.xLeft))) {
       for (BarrierComponent component : this.topComponentRow) {
@@ -203,6 +203,8 @@ public class Barrier extends AssetGroup {
         }
       }
     }
+
+    return 0;
   }
 
 

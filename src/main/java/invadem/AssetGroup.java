@@ -40,5 +40,5 @@ public abstract class AssetGroup {
 
   public abstract void reset();
 
-  public abstract void checkCollisionWithProjectile(Projectile projectile);
+  public abstract int checkCollisionWithProjectile(Projectile projectile);
 }

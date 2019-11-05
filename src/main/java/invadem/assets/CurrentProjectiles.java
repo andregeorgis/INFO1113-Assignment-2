@@ -61,9 +61,10 @@ public class CurrentProjectiles {
     }
   }
 
-  public void checkCollisions(InvaderSwarm swarm, Tank tank, List<Barrier> barriers) {
+  public int checkCollisions(InvaderSwarm swarm, Tank tank, List<Barrier> barriers) {
+    int scoreChange = 0;
     for(Projectile projectile : this.friendlyProjectiles) {
-      swarm.checkCollisionWithProjectile(projectile);
+      scoreChange += swarm.checkCollisionWithProjectile(projectile);
       for (Barrier barrier : barriers) {
         if (!barrier.isBroken()) {
           barrier.checkCollisionWithProjectile(projectile);
@@ -82,6 +83,8 @@ public class CurrentProjectiles {
         projectile.checkCollisionWithAsset(otherProjectile);
       }
     }
+
+    return scoreChange;
   }
 
   public void reset() {

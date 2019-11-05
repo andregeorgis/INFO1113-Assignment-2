@@ -149,15 +149,25 @@ public class InvaderSwarm extends AssetGroup {
     }
   }
 
-  public void checkCollisionWithProjectile(Projectile projectile) {
+  public int checkCollisionWithProjectile(Projectile projectile) {
     boolean invaderKilled = false;
+    int scoreChange = 0;
 
     if (!(projectile.getY() + projectile.getHeight() > this.yBottom || (projectile.getY() < this.yTop)) &&
         !(projectile.getX() + projectile.getWidth() > this.xRight || (projectile.getX() < this.xLeft))) {
       for (Invader invader : this.invaders) {
         if (invader.isAlive() && projectile.checkCollisionWithAsset(invader)) {
           invader.checkHealth();
-          invaderKilled = true;
+
+          if (!invader.isAlive()) {
+            invaderKilled = true;
+
+            if (invader instanceof ArmouredInvader || invader instanceof PowerInvader) {
+              scoreChange = 250;
+            } else {
+              scoreChange = 100;
+            }
+          }
         }
       }
     }
@@ -165,6 +175,8 @@ public class InvaderSwarm extends AssetGroup {
     if (invaderKilled) {
       checkBoundaries();
     }
+
+    return scoreChange;
   }
 
   public void reset() {

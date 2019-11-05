@@ -2,7 +2,10 @@ package invadem;
 
 import processing.core.PApplet;
 import processing.core.PImage;
+import processing.core.PFont;
+import processing.core.PGraphics;
 import processing.event.KeyEvent;
+
 import invadem.assets.*;
 
 import java.util.List;
@@ -13,6 +16,7 @@ public class App extends PApplet {
   public static final int WIDTH = 640;
   public static final int HEIGHT = 480;
   public static final int BARRIER_TOP = 420;
+  public static final int HIGHSCORE_INITIAL = 10000;
 
   private Tank tank;
   private InvaderSwarm swarm;
@@ -22,6 +26,8 @@ public class App extends PApplet {
   private boolean nextLevel;
   private boolean gameOver;
   private int frameCounter;
+  private int highScore;
+  private int currentScore;
 
   public static List<PImage> leftBarrierAllImgs;
   public static List<PImage> topBarrierAllImgs;
@@ -32,6 +38,7 @@ public class App extends PApplet {
   public static PImage gameOverImg;
   public PImage projectileImg;
   public PImage powerProjectileImg;
+  public PFont scoreFont;
 
   public App() {
     this.tank = null;
@@ -42,6 +49,8 @@ public class App extends PApplet {
     this.nextLevel = false;
     this.gameOver = false;
     this.frameCounter = 0;
+    this.highScore = HIGHSCORE_INITIAL;
+    this.currentScore = 0;
 
     this.leftBarrierAllImgs = new ArrayList<PImage>();
     this.topBarrierAllImgs = new ArrayList<PImage>();
@@ -50,6 +59,7 @@ public class App extends PApplet {
     this.invaderAllImgs = new ArrayList<PImage>();
     this.nextLevelImg = null;
     this.gameOverImg = null;
+    this.scoreFont = null;
   }
 
   public void setup() {
@@ -91,6 +101,8 @@ public class App extends PApplet {
 
     this.nextLevelImg = loadImage("nextlevel.png");
     this.gameOverImg = loadImage("gameover.png");
+
+    this.scoreFont = createFont("PressStart2P-Regular.ttf", 10, false);
   }
 
   public void settings() {
@@ -99,6 +111,8 @@ public class App extends PApplet {
 
   public void draw() {
     background(0);
+    textFont(this.scoreFont);
+    fill(255);
 
     if (this.nextLevel) {
       this.frameCounter++;
@@ -127,7 +141,11 @@ public class App extends PApplet {
       }
 
       this.projectiles.draw(this);
-      this.projectiles.checkCollisions(this.swarm, this.tank, this.barriers);
+
+      text("SCORE: " + Integer.toString(this.currentScore), 40, 20);
+      text("HIGH SCORE: " + Integer.toString(this.highScore), 430, 20);
+
+      this.currentScore += this.projectiles.checkCollisions(this.swarm, this.tank, this.barriers);
       this.projectiles.checkIfProjectilesOutside();
 
       if (this.tank.isDead() || this.swarm.getBottom() >= BARRIER_TOP - 10) {
@@ -136,6 +154,10 @@ public class App extends PApplet {
 
       if (this.swarm.isDead()) {
         nextLevel();
+      }
+
+      if (this.currentScore > this.highScore) {
+        this.highScore = this.currentScore;
       }
     }
   }
@@ -178,6 +200,7 @@ public class App extends PApplet {
   public void endGame() {
     reset();
     this.swarm.endGame();
+    this.currentScore = 0;
     this.gameOver = true;
   }
 
