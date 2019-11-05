@@ -175,44 +175,48 @@ public class App extends PApplet {
   }
 
   public void keyPressed(KeyEvent e) {
-    if (e.getKeyCode() == 37) {
-      this.tank.setLeft(true);
-    }
+    if (!this.nextLevel && !this.gameOver) {
+      if (e.getKeyCode() == 37) {
+        this.tank.setLeft(true);
+      }
 
-    if (e.getKeyCode() == 39) {
-      this.tank.setRight(true);
-    }
+      if (e.getKeyCode() == 39) {
+        this.tank.setRight(true);
+      }
 
-    if (e.getKeyCode() == 32 && this.shootProjectile == true) {
-      this.projectiles.addProjectile(this.tank.getX() + this.tank.getWidth()/2, this.tank.getY(), true, false);
-      this.shootProjectile = false;
+      if (e.getKeyCode() == 32 && this.shootProjectile == true) {
+        this.projectiles.addProjectile(this.tank.getX() + this.tank.getWidth()/2, this.tank.getY(), true, false);
+        this.shootProjectile = false;
+
+        // Extension
+        if (this.konami) {
+          this.konamiCounter += 2;
+          this.konamiCounter %= 6;
+          this.tank.changeImage(this.invaderAllImgs.get(this.konamiCounter));
+        }
+      }
 
       // Extension
-      if (this.konami) {
-        this.konamiCounter += 2;
-        this.konamiCounter %= 6;
-        this.tank.changeImage(this.invaderAllImgs.get(this.konamiCounter));
+      if (konamiChecker.checkKonami(e.getKeyCode())) {
+        this.konami = !this.konami;
+        konami();
       }
-    }
-
-    // Extension
-    if (konamiChecker.checkKonami(e.getKeyCode())) {
-      this.konami = !this.konami;
-      konami();
     }
   }
 
   public void keyReleased(KeyEvent e) {
-    if (e.getKeyCode() == 37) {
-      this.tank.setLeft(false);
-    }
+    if (!this.nextLevel && !this.gameOver) {
+      if (e.getKeyCode() == 37) {
+        this.tank.setLeft(false);
+      }
 
-    if (e.getKeyCode() == 39) {
-      this.tank.setRight(false);
-    }
+      if (e.getKeyCode() == 39) {
+        this.tank.setRight(false);
+      }
 
-    if (e.getKeyCode() == 32) {
-      this.shootProjectile = true;
+      if (e.getKeyCode() == 32) {
+        this.shootProjectile = true;
+      }
     }
   }
 
