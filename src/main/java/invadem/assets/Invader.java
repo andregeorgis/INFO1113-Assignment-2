@@ -13,12 +13,12 @@ public class Invader extends MovableAsset {
   public static final int X_VELOCITY_INITIAL = 1;
   public static final int Y_VELOCITY_INITIAL = 0;
 
-  private int stepCounter;
-  private boolean movingDown;
-  private boolean movingRight;
-  private boolean movingLeft;
-  private boolean makeStep;
-  private boolean alive;
+  protected int stepCounter;
+  protected boolean movingDown;
+  protected boolean movingRight;
+  protected boolean movingLeft;
+  protected boolean makeStep;
+  protected boolean alive;
 
   public Invader(List<PImage> allImgs, int x, int y) {
     super(allImgs, x, y, WIDTH, HEIGHT, HEALTH_INITIAL, X_VELOCITY_INITIAL, Y_VELOCITY_INITIAL);

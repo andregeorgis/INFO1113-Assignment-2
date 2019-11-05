@@ -26,10 +26,19 @@ public class InvaderSwarm extends AssetGroup {
   public InvaderSwarm(List<PImage> imgs, PImage projectileImg) {
     super(X_INITIAL, Y_INITIAL, WIDTH, HEIGHT, 4, 10, Invader.WIDTH, Invader.HEIGHT);
     this.invaders = new ArrayList<Invader>();
+    List<PImage> regularImgs = imgs.subList(0, 2);
+    List<PImage> armouredImgs = imgs.subList(2, 4);
+    List<PImage> powerImgs = imgs.subList(4, 6);
 
     for (int i = 0; i < 4; i++) {
       for (int j = 0; j < 10; j++) {
-        this.invaders.add(new Invader(imgs, X_INITIAL + j * (GAP + Invader.WIDTH), Y_INITIAL + i * (GAP + Invader.HEIGHT)));
+        if (i == 3) {
+          this.invaders.add(new ArmouredInvader(armouredImgs, X_INITIAL + j * (GAP + Invader.WIDTH), Y_INITIAL + i * (GAP + Invader.HEIGHT)));
+        } else if (i == 2) {
+          this.invaders.add(new PowerInvader(powerImgs, X_INITIAL + j * (GAP + Invader.WIDTH), Y_INITIAL + i * (GAP + Invader.HEIGHT)));
+        } else {
+          this.invaders.add(new Invader(regularImgs, X_INITIAL + j * (GAP + Invader.WIDTH), Y_INITIAL + i * (GAP + Invader.HEIGHT)));
+        }
       }
     }
 

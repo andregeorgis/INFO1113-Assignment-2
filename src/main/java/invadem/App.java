@@ -61,6 +61,10 @@ public class App extends PApplet {
 
     this.invaderAllImgs.add(loadImage("invader1.png"));
     this.invaderAllImgs.add(loadImage("invader2.png"));
+    this.invaderAllImgs.add(loadImage("invader1_armoured.png"));
+    this.invaderAllImgs.add(loadImage("invader2_armoured.png"));
+    this.invaderAllImgs.add(loadImage("invader1_power.png"));
+    this.invaderAllImgs.add(loadImage("invader2_power.png"));
     this.swarm = new InvaderSwarm(invaderAllImgs, this.projectileImg);
 
     this.leftBarrierAllImgs.add(loadImage("barrier_left1.png"));
