@@ -15,8 +15,6 @@ public class Konami {
       this.currentButton = 0;
     }
 
-    System.out.println(this.currentButton);
-
     if (this.currentButton == SEQUENCE.length) {
       this.currentButton = 0;
       return true;

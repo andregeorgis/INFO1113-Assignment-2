@@ -10,6 +10,7 @@ import invadem.assets.*;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class App extends PApplet {
 
@@ -32,7 +33,9 @@ public class App extends PApplet {
   // Extension
   private boolean konami;
   private Konami konamiChecker;
-  private int konamiCounter;
+  private int konamiImgCounter;
+  public static final int KONAMI_RATE = 20;
+  private int konamiFrameCounter;
 
   public static PImage tankImg;
   public static List<PImage> leftBarrierAllImgs;
@@ -70,7 +73,8 @@ public class App extends PApplet {
     // Extension
     this.konami = false;
     this.konamiChecker = new Konami();
-    this.konamiCounter = 0;
+    this.konamiImgCounter = 0;
+    this.konamiFrameCounter = 0;
   }
 
   public void setup() {
@@ -160,6 +164,16 @@ public class App extends PApplet {
       this.currentScore += this.projectiles.checkCollisions(this.swarm, this.tank, this.barriers);
       this.projectiles.checkIfProjectilesOutside();
 
+      // Extension
+      if (this.konami) {
+        this.konamiFrameCounter++;
+
+        if (this.konamiFrameCounter == KONAMI_RATE) {
+          this.konamiFrameCounter = 0;
+          konamiShot();
+        }
+      }
+
       if (this.tank.isDead() || this.swarm.getBottom() >= BARRIER_TOP - 10) {
         endGame();
       }
@@ -190,9 +204,9 @@ public class App extends PApplet {
 
         // Extension
         if (this.konami) {
-          this.konamiCounter += 2;
-          this.konamiCounter %= 6;
-          this.tank.changeImage(this.invaderAllImgs.get(this.konamiCounter));
+          this.konamiImgCounter += 2;
+          this.konamiImgCounter %= 6;
+          this.tank.changeImage(this.invaderAllImgs.get(this.konamiImgCounter));
         }
       }
 
@@ -247,8 +261,6 @@ public class App extends PApplet {
       barrier.reset();
     }
     this.projectiles.reset();
-
-    konami();
   }
 
   //Extension
@@ -256,10 +268,20 @@ public class App extends PApplet {
     if (this.konami) {
       this.tank.changeImage(this.invaderAllImgs.get(0));
       this.swarm.konami(this.tankImg);
+      this.konamiFrameCounter = 0;
     } else {
       this.tank.konamiReset();
       this.swarm.konamiReset();
+      this.konamiFrameCounter = 0;
     }
+  }
+
+  public void konamiShot() {
+    Random rand = new Random();
+    int x1 = rand.nextInt(100);
+    int x2 = rand.nextInt(100) + 540;
+    this.projectiles.addProjectile(x1, 0, false, false, true);
+    this.projectiles.addProjectile(x2, 0, false, false, true);
   }
 
   public static void main(String[] args) {

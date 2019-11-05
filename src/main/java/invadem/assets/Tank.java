@@ -69,5 +69,7 @@ public class Tank extends MovableAsset {
 
   public boolean isDead() {return this.health <= 0;}
 
+  // Extension
+
   public void konamiReset() {changeImage(0);}
 }
