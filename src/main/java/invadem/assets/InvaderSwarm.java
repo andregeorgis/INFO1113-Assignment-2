@@ -32,9 +32,9 @@ public class InvaderSwarm extends AssetGroup {
 
     for (int i = 0; i < 4; i++) {
       for (int j = 0; j < 10; j++) {
-        if (i == 3) {
+        if (i == 0) {
           this.invaders.add(new ArmouredInvader(armouredImgs, X_INITIAL + j * (GAP + Invader.WIDTH), Y_INITIAL + i * (GAP + Invader.HEIGHT)));
-        } else if (i == 2) {
+        } else if (i == 1) {
           this.invaders.add(new PowerInvader(powerImgs, X_INITIAL + j * (GAP + Invader.WIDTH), Y_INITIAL + i * (GAP + Invader.HEIGHT)));
         } else {
           this.invaders.add(new Invader(regularImgs, X_INITIAL + j * (GAP + Invader.WIDTH), Y_INITIAL + i * (GAP + Invader.HEIGHT)));
@@ -231,6 +231,23 @@ public class InvaderSwarm extends AssetGroup {
       projectiles.addProjectile(projectileX, projectileY, false, true);
     } else {
       projectiles.addProjectile(projectileX, projectileY, false, false);
+    }
+  }
+
+  // Extension
+  public void konami(PImage tankImg) {
+    for (Invader invader : this.invaders) {
+      if (invader.isAlive()) {
+        invader.changeImage(tankImg);
+      }
+    }
+  }
+
+  public void konamiReset() {
+    for (Invader invader : this.invaders) {
+      if (invader.isAlive()) {
+        invader.konamiReset();
+      }
     }
   }
 }

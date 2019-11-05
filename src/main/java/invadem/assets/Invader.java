@@ -54,11 +54,17 @@ public class Invader extends MovableAsset {
       this.movingDown = true;
       setYVelocity(1);
       setXVelocity(0);
-      changeImage(1);
+      // Extension
+      if (this.allImgs.contains(this.img)) {
+        changeImage(1);
+      }
       this.stepCounter = 0;
     } else if (this.movingDown && this.stepCounter == 8) {
       this.movingDown = false;
-      changeImage(0);
+      // Extension
+      if (this.allImgs.contains(this.img)) {
+        changeImage(0);
+      }
 
       if (this.movingRight) {
         setXVelocity(-1);
@@ -104,5 +110,14 @@ public class Invader extends MovableAsset {
     this.makeStep = true;
     this.alive = true;
     this.health = 1;
+  }
+
+  // Extension
+  public void konamiReset() {
+    if (this.movingDown) {
+      changeImage(1);
+    } else {
+      changeImage(0);
+    }
   }
 }

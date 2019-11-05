@@ -29,6 +29,12 @@ public class App extends PApplet {
   private int highScore;
   private int currentScore;
 
+  // Extension
+  private boolean konami;
+  private Konami konamiChecker;
+  private int konamiCounter;
+
+  public static PImage tankImg;
   public static List<PImage> leftBarrierAllImgs;
   public static List<PImage> topBarrierAllImgs;
   public static List<PImage> rightBarrierAllImgs;
@@ -60,11 +66,17 @@ public class App extends PApplet {
     this.nextLevelImg = null;
     this.gameOverImg = null;
     this.scoreFont = null;
+
+    // Extension
+    this.konami = false;
+    this.konamiChecker = new Konami();
+    this.konamiCounter = 0;
   }
 
   public void setup() {
     frameRate(60);
-    this.tank = new Tank(loadImage("tank1.png"));
+    this.tankImg = loadImage("tank1.png");
+    this.tank = new Tank(this.tankImg);
 
     this.projectileImg = loadImage("projectile.png");
     this.powerProjectileImg = loadImage("projectile_lg.png");
@@ -174,6 +186,19 @@ public class App extends PApplet {
     if (e.getKeyCode() == 32 && this.shootProjectile == true) {
       this.projectiles.addProjectile(this.tank.getX() + this.tank.getWidth()/2, this.tank.getY(), true, false);
       this.shootProjectile = false;
+
+      // Extension
+      if (this.konami) {
+        this.konamiCounter += 2;
+        this.konamiCounter %= 6;
+        this.tank.changeImage(this.invaderAllImgs.get(this.konamiCounter));
+      }
+    }
+
+    // Extension
+    if (konamiChecker.checkKonami(e.getKeyCode())) {
+      this.konami = !this.konami;
+      konami();
     }
   }
 
@@ -195,6 +220,9 @@ public class App extends PApplet {
     reset();
     this.swarm.nextLevel();
     this.nextLevel = true;
+
+    // Extension
+    konami();
   }
 
   public void endGame() {
@@ -202,6 +230,11 @@ public class App extends PApplet {
     this.swarm.endGame();
     this.currentScore = 0;
     this.gameOver = true;
+
+    // Extension
+    this.konami = false;
+    konami();
+    this.konamiChecker.reset();
   }
 
   public void reset() {
@@ -210,6 +243,19 @@ public class App extends PApplet {
       barrier.reset();
     }
     this.projectiles.reset();
+
+    konami();
+  }
+
+  //Extension
+  public void konami() {
+    if (this.konami) {
+      this.tank.changeImage(this.invaderAllImgs.get(0));
+      this.swarm.konami(this.tankImg);
+    } else {
+      this.tank.konamiReset();
+      this.swarm.konamiReset();
+    }
   }
 
   public static void main(String[] args) {
