@@ -11,11 +11,13 @@ public class CurrentProjectiles {
   private List<Projectile> friendlyProjectiles;
   private List<Projectile> enemyProjectiles;
   private PImage projectileImg;
+  private PImage powerProjectileImg;
 
-  public CurrentProjectiles(PImage projectileImg) {
+  public CurrentProjectiles(PImage projectileImg, PImage powerProjectileImg) {
     this.friendlyProjectiles = new ArrayList<Projectile>();
     this.enemyProjectiles = new ArrayList<Projectile>();
     this.projectileImg = projectileImg;
+    this.powerProjectileImg = powerProjectileImg;
   }
 
   public void draw(PApplet app) {
@@ -28,11 +30,16 @@ public class CurrentProjectiles {
     }
   }
 
-  public void addProjectile(int x, int y, boolean friendly) {
+  public void addProjectile(int x, int y, boolean friendly, boolean power) {
     if (friendly) {
       this.friendlyProjectiles.add(new Projectile(projectileImg, x, y));
     } else {
-      Projectile projectile = new Projectile(projectileImg, x, y);
+      Projectile projectile;
+      if (power) {
+        projectile = new PowerProjectile(powerProjectileImg, x, y);
+      } else {
+        projectile = new Projectile(projectileImg, x, y);
+      }
       projectile.setYVelocity(1);
       this.enemyProjectiles.add(projectile);
     }

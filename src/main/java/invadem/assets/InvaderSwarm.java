@@ -215,6 +215,10 @@ public class InvaderSwarm extends AssetGroup {
     int projectileX = this.invaders.get(randInt).getX() + this.assetWidth / 2;
     int projectileY = this.invaders.get(randInt).getY() + this.assetHeight;
 
-    projectiles.addProjectile(projectileX, projectileY, false);
+    if (this.invaders.get(randInt) instanceof PowerInvader) {
+      projectiles.addProjectile(projectileX, projectileY, false, true);
+    } else {
+      projectiles.addProjectile(projectileX, projectileY, false, false);
+    }
   }
 }

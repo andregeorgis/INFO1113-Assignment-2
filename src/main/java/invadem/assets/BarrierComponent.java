@@ -27,11 +27,11 @@ public class BarrierComponent extends DrawableAsset {
   }
 
   public void checkHealth() {
-    this.imgIndex = 3 - this.health;
-    if (this.imgIndex == 3) {
+    if (this.health <= 0) {
       this.img = null;
       this.alive = false;
     } else {
+      this.imgIndex = 3 - this.health;
       changeImage(this.imgIndex);
     }
   }

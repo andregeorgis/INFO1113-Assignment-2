@@ -31,6 +31,7 @@ public class App extends PApplet {
   public static PImage nextLevelImg;
   public static PImage gameOverImg;
   public PImage projectileImg;
+  public PImage powerProjectileImg;
 
   public App() {
     this.tank = null;
@@ -56,8 +57,9 @@ public class App extends PApplet {
     this.tank = new Tank(loadImage("tank1.png"));
 
     this.projectileImg = loadImage("projectile.png");
+    this.powerProjectileImg = loadImage("projectile_lg.png");
 
-    this.projectiles = new CurrentProjectiles(this.projectileImg);
+    this.projectiles = new CurrentProjectiles(this.projectileImg, this.powerProjectileImg);
 
     this.invaderAllImgs.add(loadImage("invader1.png"));
     this.invaderAllImgs.add(loadImage("invader2.png"));
@@ -148,7 +150,7 @@ public class App extends PApplet {
     }
 
     if (e.getKeyCode() == 32 && this.shootProjectile == true) {
-      this.projectiles.addProjectile(this.tank.getX() + this.tank.getWidth()/2, this.tank.getY(), true);
+      this.projectiles.addProjectile(this.tank.getX() + this.tank.getWidth()/2, this.tank.getY(), true, false);
       this.shootProjectile = false;
     }
   }

@@ -12,8 +12,8 @@ public class Projectile extends MovableAsset {
   public static final int Y_VELOCITY_INITIAL = -1;
   public static final int HEALTH_INITIAL = 1;
 
-  private boolean hit;
-  private int damage;
+  protected boolean hit;
+  protected int damage;
 
   public Projectile(PImage img, int x, int y) {
     super(img, x, y, WIDTH, HEIGHT, HEALTH_INITIAL, X_VELOCITY_INITIAL, Y_VELOCITY_INITIAL);

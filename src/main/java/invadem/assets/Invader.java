@@ -80,7 +80,7 @@ public class Invader extends MovableAsset {
   public boolean isAlive() {return this.alive;}
 
   public void checkHealth() {
-    if (this.health == 0) {
+    if (this.health <= 0) {
       kill();
     }
   }
