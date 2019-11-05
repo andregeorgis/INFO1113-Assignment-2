@@ -63,6 +63,8 @@ public class Tank extends MovableAsset {
     this.health = HEALTH_INITIAL;
     this.xVelocity = X_VELOCITY_INITIAL;
     this.yVelocity = Y_VELOCITY_INITIAL;
+    this.left = false;
+    this.right = false;
   }
 
   public boolean isDead() {return this.health <= 0;}
