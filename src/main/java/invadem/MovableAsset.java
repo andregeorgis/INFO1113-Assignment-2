@@ -36,5 +36,5 @@ public abstract class MovableAsset extends DrawableAsset {
 
   public void changeY() {this.y += this.yVelocity;}
 
-  public boolean isMoving() {return this.xVelocity > 0 || this.yVelocity > 0;}
+  public boolean isMoving() {return this.xVelocity != 0 || this.yVelocity != 0;}
 }
