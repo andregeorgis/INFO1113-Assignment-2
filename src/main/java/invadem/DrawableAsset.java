@@ -50,6 +50,16 @@ public abstract class DrawableAsset {
 
   public PImage getImage() {return this.img;}
 
+  public void setX(int x) {this.x = x;}
+
+  public void setY(int y) {this.y = y;}
+
+  public void setWidth(int width) {this.width = width;}
+
+  public void setHeight(int height) {this.height = height;}
+
+  public void setHealth(int health) {this.health = health;}
+
   public void changeImage(PImage img) {this.img = img;}
 
   public void changeImage(int index) {this.img = this.allImgs.get(index);}

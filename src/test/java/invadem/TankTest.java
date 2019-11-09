@@ -2,14 +2,15 @@ package invadem;
 
 import org.junit.Test;
 import static org.junit.Assert.*;
+import invadem.assets.Tank;
 
 public class TankTest {
 
-//    @Test
-//    public void testTankConstruction() {
-//        Tank tank = new Tank(null, 0, 0);
-//        assertNotNull(tank);
-//    }
+   @Test
+   public void testTankConstruction() {
+       Tank tank = new Tank(null);
+       assertNotNull(tank);
+   }
 
 //    @Test
 //    public void testTankProjectile() {
