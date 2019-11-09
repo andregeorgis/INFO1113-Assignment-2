@@ -8,6 +8,8 @@ public class Konami {
     this.currentButton = 0;
   }
 
+  public int getButton() {return this.currentButton;}
+
   public boolean checkKonami(int keyCode) {
     if (keyCode == SEQUENCE[this.currentButton]) {
       this.currentButton++;
