@@ -16,6 +16,7 @@ public class DrawableAssetTest {
   private DrawableAsset assetOne;
   private DrawableAsset assetTwo;
   private DrawableAsset assetThree;
+  private DrawableAsset assetFour;
 
   @Before
   public void setupDrawableAsset() {
@@ -113,6 +114,30 @@ public class DrawableAssetTest {
     this.assetThree.loseHealth(-10);
     health = this.assetThree.getHealth();
     assertEquals(health, 8);
+  }
+
+  @Test
+  public void changingImages() {
+    PImage tankImg = new PImage();
+    PImage emptyImg = new PImage();
+    PImage projectileImg = new PImage();
+
+    List<PImage> imgs = new ArrayList<PImage>();
+    imgs.add(tankImg);
+    imgs.add(emptyImg);
+
+    this.assetFour = new DrawableAsset(imgs, 0, 0, 0, 0, 0) {
+      public void draw(PApplet app) {;}
+    };
+
+    PImage currentImage = this.assetFour.getImage();
+    assertEquals(currentImage, tankImg);
+    this.assetFour.changeImage(projectileImg);
+    currentImage = this.assetFour.getImage();
+    assertEquals(currentImage, projectileImg);
+    this.assetFour.changeImage(1);
+    currentImage = this.assetFour.getImage();
+    assertEquals(currentImage, emptyImg);
   }
 
 }
