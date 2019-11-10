@@ -53,7 +53,6 @@ public class Barrier extends AssetGroup {
         component.draw(app);
       }
     }
-
   }
 
   public void reset() {
@@ -78,6 +77,7 @@ public class Barrier extends AssetGroup {
     this.rightCol = 2;
     this.topRow = 0;
     this.bottomRow = 2;
+    this.broken = false;
   }
 
   public boolean isBroken() {return this.broken;}
@@ -94,7 +94,7 @@ public class Barrier extends AssetGroup {
         this.xLeft += this.assetWidth;
       }
     } else if (this.leftCol == 1) {
-      if (!this.middleComponentRow.get(1).isAlive()) {
+      if (!this.topComponentRow.get(1).isAlive()) {
         leftCol++;
         this.xLeft += this.assetWidth;
       }
@@ -110,21 +110,21 @@ public class Barrier extends AssetGroup {
 
     // Check rightCol
     if (this.rightCol == 0) {
-      if (!(this.topComponentRow.get(2).isAlive() ||
-            this.middleComponentRow.get(1).isAlive() ||
-            this.bottomComponentRow.get(1).isAlive())) {
+      if (!(this.topComponentRow.get(0).isAlive() ||
+            this.middleComponentRow.get(0).isAlive() ||
+            this.bottomComponentRow.get(0).isAlive())) {
         rightCol--;
         this.xRight -= this.assetWidth;
       }
     } else if (this.rightCol == 1) {
-      if (!this.middleComponentRow.get(1).isAlive()) {
+      if (!this.topComponentRow.get(1).isAlive()) {
         rightCol--;
         this.xRight -= this.assetWidth;
       }
     } else if (this.rightCol == 2) {
-      if (!(this.topComponentRow.get(0).isAlive() ||
-            this.middleComponentRow.get(0).isAlive() ||
-            this.bottomComponentRow.get(0).isAlive())) {
+      if (!(this.topComponentRow.get(2).isAlive() ||
+            this.middleComponentRow.get(1).isAlive() ||
+            this.bottomComponentRow.get(1).isAlive())) {
         rightCol--;
         this.xRight -= this.assetWidth;
       }
@@ -138,12 +138,16 @@ public class Barrier extends AssetGroup {
           break;
         }
       } else if (this.topRow == 1) {
-        if (this.middleComponentRow.get(i).isAlive()) {
-          break;
+        if (i <= 1) {
+          if (this.middleComponentRow.get(i).isAlive()) {
+            break;
+          }
         }
       } else if (this.topRow == 2) {
-        if (this.bottomComponentRow.get(i).isAlive()) {
-          break;
+        if (i <= 1) {
+          if (this.bottomComponentRow.get(i).isAlive()) {
+            break;
+          }
         }
       }
     }
@@ -161,12 +165,16 @@ public class Barrier extends AssetGroup {
           break;
         }
       } else if (this.bottomRow == 1) {
-        if (this.middleComponentRow.get(i).isAlive()) {
-          break;
+        if (i <= 1) {
+          if (this.middleComponentRow.get(i).isAlive()) {
+            break;
+          }
         }
       } else if (this.bottomRow == 2) {
-        if (this.bottomComponentRow.get(i).isAlive()) {
-          break;
+        if (i <= 1) {
+          if (this.bottomComponentRow.get(i).isAlive()) {
+            break;
+          }
         }
       }
     }
@@ -185,8 +193,8 @@ public class Barrier extends AssetGroup {
   public int checkCollisionWithProjectile(Projectile projectile) {
     boolean componentKilled = false;
 
-    if (!(projectile.getY() + projectile.getHeight() > this.yBottom || (projectile.getY() < this.yTop)) &&
-        !(projectile.getX() + projectile.getWidth() > this.xRight || (projectile.getX() < this.xLeft))) {
+    if (!((projectile.getY() + projectile.getHeight() > this.yBottom) || (projectile.getY() < this.yTop)) &&
+        !((projectile.getX() + projectile.getWidth() > this.xRight) || (projectile.getX() < this.xLeft))) {
       for (BarrierComponent component : this.topComponentRow) {
         if (component.isAlive() && projectile.checkCollisionWithAsset(component)) {
           component.checkHealth();

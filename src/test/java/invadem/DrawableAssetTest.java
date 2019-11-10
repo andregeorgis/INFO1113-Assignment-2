@@ -47,7 +47,7 @@ public class DrawableAssetTest {
   }
 
   @Test
-  public void testGetterMethods() {
+  public void testDrawableAssetGetterMethods() {
     int x = this.assetOne.getX();
     assertEquals(x, 1);
 
@@ -101,7 +101,7 @@ public class DrawableAssetTest {
   }
 
   @Test
-  public void testIsAliveAndLoseHealth() {
+  public void testDrawableAssetIsAliveAndLoseHealth() {
     assertTrue(this.assetThree.isAlive());
     this.assetThree.setHealth(0);
     assertFalse(this.assetThree.isAlive());
@@ -117,7 +117,7 @@ public class DrawableAssetTest {
   }
 
   @Test
-  public void changingImages() {
+  public void drawableAssetChangingImages() {
     PImage tankImg = new PImage();
     PImage emptyImg = new PImage();
     PImage projectileImg = new PImage();

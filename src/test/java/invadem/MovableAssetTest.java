@@ -45,17 +45,17 @@ public class MovableAssetTest {
   }
 
   @Test
-  public void testMoveableAssetConstructionOne() {
+  public void testMovableAssetConstructionOne() {
     assertNotNull(this.assetOne);
   }
 
   @Test
-  public void testMoveableAssetConstructionTwo() {
+  public void testMovableAssetConstructionTwo() {
     assertNotNull(this.assetTwo);
   }
 
   @Test
-  public void testGetterMethods() {
+  public void testMovableAssetGetterMethods() {
     int xVelocity = this.assetOne.getXVelocity();
     assertEquals(xVelocity, 1);
 
@@ -64,7 +64,7 @@ public class MovableAssetTest {
   }
 
   @Test
-  public void testSetterMethods() {
+  public void testMovableAssetSetterMethods() {
     int xVelocity = this.assetTwo.getXVelocity();
     assertEquals(xVelocity, 2);
     this.assetTwo.setXVelocity(4);
@@ -79,7 +79,7 @@ public class MovableAssetTest {
   }
 
   @Test
-  public void testChangeMethods() {
+  public void testMovableAssetChangeMethods() {
     int x = this.assetThree.getX();
     assertEquals(x, 1);
     this.assetThree.changeX();
@@ -94,7 +94,7 @@ public class MovableAssetTest {
   }
 
   @Test
-  public void testIsMoving() {
+  public void testMovableAssetIsMoving() {
     assertFalse(this.assetFour.isMoving());
     this.assetFour.setXVelocity(1);
     assertTrue(this.assetFour.isMoving());

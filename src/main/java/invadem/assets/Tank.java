@@ -53,6 +53,10 @@ public class Tank extends MovableAsset {
     }
   }
 
+  public boolean isMovingLeft() {return this.left;}
+
+  public boolean isMovingRight() {return this.right;}
+
   public void setLeft(boolean state) {this.left = state;}
 
   public void setRight(boolean state) {this.right = state;}

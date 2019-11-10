@@ -18,7 +18,7 @@ public class KonamiTest {
   }
 
   @Test
-  public void testGetButton() {
+  public void testKonamiGetButton() {
     int button = this.konami.getButton();
     assertEquals(button, 0);
   }
@@ -74,7 +74,7 @@ public class KonamiTest {
   }
 
   @Test
-  public void checkInvalidKeys() {
+  public void checkKonamiInvalidKeys() {
     int button = this.konami.getButton();
     assertEquals(button, 0);
 
@@ -104,7 +104,7 @@ public class KonamiTest {
   }
 
   @Test
-  public void checkWrongOrder() {
+  public void checkKonamiWrongOrder() {
     int button = this.konami.getButton();
     assertEquals(button, 0);
 
@@ -141,7 +141,7 @@ public class KonamiTest {
   }
 
   @Test
-  public void testReset() {
+  public void testKonamiReset() {
     int button = this.konami.getButton();
     assertEquals(button, 0);
 

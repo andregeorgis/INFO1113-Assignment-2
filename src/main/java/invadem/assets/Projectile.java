@@ -37,6 +37,10 @@ public class Projectile extends MovableAsset {
     return getY() < -10 || getY() > 490;
   }
 
+  public boolean isDud() {return this.hit;}
+
+  public int getDamage() {return this.damage;}
+
   public boolean checkCollisionWithAsset(DrawableAsset asset) {
     if (this.x < (asset.getX() + asset.getWidth()) &&
         (this.x + this.width) > asset.getX() &&
