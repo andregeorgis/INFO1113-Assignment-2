@@ -18,13 +18,13 @@ public class InvaderSwarm extends AssetGroup {
 
   public static final int X_INITIAL = 171;
   public static final int Y_INITIAL = 20;
-  public static final int WIDTH = 268;
-  public static final int HEIGHT = 100;
+  public static final int WIDTH_INITIAL = 268;
+  public static final int HEIGHT_INITIAL = 100;
   public static final int GAP = 12;
   public static final int PROJECTILE_RATE_INITIAL = 300;
 
   public InvaderSwarm(List<PImage> imgs, PImage projectileImg) {
-    super(X_INITIAL, Y_INITIAL, WIDTH, HEIGHT, 4, 10, Invader.WIDTH, Invader.HEIGHT);
+    super(X_INITIAL, Y_INITIAL, WIDTH_INITIAL, HEIGHT_INITIAL, 4, 10, Invader.WIDTH, Invader.HEIGHT);
     this.invaders = new ArrayList<Invader>();
     List<PImage> regularImgs = imgs.subList(0, 2);
     List<PImage> armouredImgs = imgs.subList(2, 4);
@@ -192,9 +192,9 @@ public class InvaderSwarm extends AssetGroup {
     this.bottomRow = 3;
 
     this.xLeft = X_INITIAL;
-    this.xRight = X_INITIAL + WIDTH;
+    this.xRight = X_INITIAL + WIDTH_INITIAL;
     this.yTop = Y_INITIAL;
-    this.yBottom = Y_INITIAL + HEIGHT;
+    this.yBottom = Y_INITIAL + HEIGHT_INITIAL;
   }
 
   public void nextLevel() {

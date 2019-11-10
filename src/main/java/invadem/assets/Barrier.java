@@ -15,11 +15,11 @@ public class Barrier extends AssetGroup {
   private List<BarrierComponent> bottomComponentRow;
   private boolean broken;
 
-  public static final int WIDTH = 24;
-  public static final int HEIGHT = 24;
+  public static final int WIDTH_INITIAL = 24;
+  public static final int HEIGHT_INITIAL = 24;
 
   public Barrier(List<PImage> left, List<PImage> top, List<PImage> right, List<PImage> solid, int x, int y) {
-    super(x, y, WIDTH, HEIGHT, 3, 3, BarrierComponent.WIDTH, BarrierComponent.HEIGHT);
+    super(x, y, WIDTH_INITIAL, HEIGHT_INITIAL, 3, 3, BarrierComponent.WIDTH, BarrierComponent.HEIGHT);
 
     this.topComponentRow = new ArrayList<BarrierComponent>();
     this.topComponentRow.add(new BarrierComponent(left, x, y));
@@ -183,25 +183,43 @@ public class Barrier extends AssetGroup {
   }
 
   public int checkCollisionWithProjectile(Projectile projectile) {
+    boolean componentKilled = false;
+
     if (!(projectile.getY() + projectile.getHeight() > this.yBottom || (projectile.getY() < this.yTop)) &&
         !(projectile.getX() + projectile.getWidth() > this.xRight || (projectile.getX() < this.xLeft))) {
       for (BarrierComponent component : this.topComponentRow) {
         if (component.isAlive() && projectile.checkCollisionWithAsset(component)) {
           component.checkHealth();
+
+          if (!component.isAlive()) {
+            componentKilled = true;
+          }
         }
       }
 
       for (BarrierComponent component : this.middleComponentRow) {
         if (component.isAlive() && projectile.checkCollisionWithAsset(component)) {
           component.checkHealth();
+
+          if (!component.isAlive()) {
+            componentKilled = true;
+          }
         }
       }
 
       for (BarrierComponent component : this.bottomComponentRow) {
         if (component.isAlive() && projectile.checkCollisionWithAsset(component)) {
           component.checkHealth();
+
+          if (!component.isAlive()) {
+            componentKilled = true;
+          }
         }
       }
+    }
+
+    if (componentKilled) {
+      checkBoundaries();
     }
 
     return 0;
