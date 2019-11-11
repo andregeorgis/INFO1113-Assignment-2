@@ -112,6 +112,14 @@ public class Invader extends MovableAsset {
     this.health = 1;
   }
 
+  public boolean isMovingRight() {return this.movingRight;}
+
+  public boolean isMovingDown() {return this.movingDown;}
+
+  public boolean isMovingLeft() {return this.movingLeft;}
+
+  public boolean isMoving() {return this.makeStep;}
+
   // Extension
   public void konamiReset() {
     if (this.movingDown) {
