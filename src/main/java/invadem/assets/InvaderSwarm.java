@@ -11,10 +11,10 @@ import java.util.Random;
 
 public class InvaderSwarm extends AssetGroup {
 
-  private List<Invader> invaders;
-  private int projectileTimer;
-  private int projectileRate;
-  private PImage projectileImg;
+  protected List<Invader> invaders;
+  protected int projectileTimer;
+  protected int projectileRate;
+  protected PImage projectileImg;
 
   public static final int X_INITIAL = 171;
   public static final int Y_INITIAL = 20;
@@ -149,13 +149,20 @@ public class InvaderSwarm extends AssetGroup {
     }
   }
 
-  public int checkCollisionWithProjectile(Projectile projectile) {
+  public int checkCollisionWithProjectile(Projectile projectile, boolean friendly) {
+    boolean checkCollision = false;
     boolean invaderKilled = false;
     int scoreChange = 0;
 
-    if (!(projectile.getY() + projectile.getHeight() > this.yBottom || (projectile.getY() < this.yTop)) &&
-        !(projectile.getX() + projectile.getWidth() > this.xRight || (projectile.getX() < this.xLeft))) {
-      for (Invader invader : this.invaders) {
+    if (this.xLeft < (projectile.getX() + projectile.getWidth()) &&
+        this.xRight > projectile.getX() &&
+        this.yTop < (projectile.getY() + projectile.getHeight()) &&
+        this.yBottom > projectile.getY()) {
+      checkCollision = true;
+    }
+
+    for (Invader invader : this.invaders) {
+      if (checkCollision) {
         if (invader.isAlive() && projectile.checkCollisionWithAsset(invader)) {
           invader.checkHealth();
 
@@ -202,6 +209,7 @@ public class InvaderSwarm extends AssetGroup {
     if (this.projectileRate != 60) {
       this.projectileRate -= 60;
     }
+    this.projectileTimer = 0;
   }
 
   public void endGame() {
@@ -231,23 +239,6 @@ public class InvaderSwarm extends AssetGroup {
       projectiles.addProjectile(projectileX, projectileY, false, true);
     } else {
       projectiles.addProjectile(projectileX, projectileY, false, false);
-    }
-  }
-
-  // Extension
-  public void konami(PImage tankImg) {
-    for (Invader invader : this.invaders) {
-      if (invader.isAlive()) {
-        invader.changeImage(tankImg);
-      }
-    }
-  }
-
-  public void konamiReset() {
-    for (Invader invader : this.invaders) {
-      if (invader.isAlive()) {
-        invader.konamiReset();
-      }
     }
   }
 }

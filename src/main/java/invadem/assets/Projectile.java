@@ -21,6 +21,12 @@ public class Projectile extends MovableAsset {
     this.damage = 1;
   }
 
+  public Projectile(PImage img, int x, int y, int width, int height) {
+    super(img, x, y, width, height, HEALTH_INITIAL, X_VELOCITY_INITIAL, Y_VELOCITY_INITIAL);
+    this.hit = false;
+    this.damage = 1;
+  }
+
   public void draw(PApplet app) {
     if (!this.hit) {
       app.image(this.img, this.x, this.y, this.width, this.height);
@@ -38,6 +44,8 @@ public class Projectile extends MovableAsset {
   }
 
   public boolean isDud() {return this.hit;}
+
+  public void hit() {this.hit = true;}
 
   public int getDamage() {return this.damage;}
 

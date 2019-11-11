@@ -190,11 +190,18 @@ public class Barrier extends AssetGroup {
     }
   }
 
-  public int checkCollisionWithProjectile(Projectile projectile) {
+  public int checkCollisionWithProjectile(Projectile projectile, boolean friendly) {
+    boolean checkCollision = false;
     boolean componentKilled = false;
 
-    if (!((projectile.getY() + projectile.getHeight() > this.yBottom) || (projectile.getY() < this.yTop)) &&
-        !((projectile.getX() + projectile.getWidth() > this.xRight) || (projectile.getX() < this.xLeft))) {
+    if (this.xLeft < (projectile.getX() + projectile.getWidth()) &&
+        this.xRight > projectile.getX() &&
+        this.yTop < (projectile.getY() + projectile.getHeight()) &&
+        this.yBottom > projectile.getY()) {
+      checkCollision = true;
+    }
+
+    if (checkCollision) {
       for (BarrierComponent component : this.topComponentRow) {
         if (component.isAlive() && projectile.checkCollisionWithAsset(component)) {
           component.checkHealth();

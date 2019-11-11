@@ -120,12 +120,4 @@ public class Invader extends MovableAsset {
 
   public boolean isMoving() {return this.makeStep;}
 
-  // Extension
-  public void konamiReset() {
-    if (this.movingDown) {
-      changeImage(1);
-    } else {
-      changeImage(0);
-    }
-  }
 }

@@ -15,8 +15,8 @@ public class Tank extends MovableAsset {
   public static final int X_BOUND_RIGHT = 460 - WIDTH;
   public static final int HEALTH_INITIAL = 3;
 
-  private boolean left;
-  private boolean right;
+  protected boolean left;
+  protected boolean right;
 
   public Tank(PImage img) {
     super(img, X_INITIAL, Y_INITIAL, WIDTH, HEIGHT, HEALTH_INITIAL, X_VELOCITY_INITIAL, Y_VELOCITY_INITIAL);
@@ -72,8 +72,4 @@ public class Tank extends MovableAsset {
   }
 
   public boolean isDead() {return this.health <= 0;}
-
-  // Extension
-
-  public void konamiReset() {changeImage(0);}
 }

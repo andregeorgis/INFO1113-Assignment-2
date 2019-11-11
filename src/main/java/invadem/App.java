@@ -7,6 +7,7 @@ import processing.core.PGraphics;
 import processing.event.KeyEvent;
 
 import invadem.assets.*;
+import invadem.assets.extension.*;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -23,7 +24,6 @@ public class App extends PApplet {
   private InvaderSwarm swarm;
   private List<Barrier> barriers;
   private CurrentProjectiles projectiles;
-  private boolean shootProjectile;
   private boolean nextLevel;
   private boolean gameOver;
   private int frameCounter;
@@ -33,9 +33,9 @@ public class App extends PApplet {
   // Extension
   private boolean konami;
   private Konami konamiChecker;
-  private int konamiImgCounter;
-  public static final int KONAMI_RATE = 20;
-  private int konamiFrameCounter;
+  private KonamiTank konamiTank;
+  private KonamiInvaderSwarm konamiInvaderSwarm;
+  private KonamiCurrentProjectiles konamiProjectiles;
 
   public static PImage tankImg;
   public static List<PImage> leftBarrierAllImgs;
@@ -49,12 +49,16 @@ public class App extends PApplet {
   public PImage powerProjectileImg;
   public PFont scoreFont;
 
+  // Extension
+  public static PImage konamiTankImg;
+  public static List<PImage> konamiInvaderAllImgs;
+  public static List<PImage> konamiProjectilesAllImgs;
+
   public App() {
     this.tank = null;
     this.swarm = null;
     this.barriers = new ArrayList<Barrier>();
     this.projectiles = null;
-    this.shootProjectile = true;
     this.nextLevel = false;
     this.gameOver = false;
     this.frameCounter = 0;
@@ -73,8 +77,13 @@ public class App extends PApplet {
     // Extension
     this.konami = false;
     this.konamiChecker = new Konami();
-    this.konamiImgCounter = 0;
-    this.konamiFrameCounter = 0;
+    this.konamiTank = null;
+    this.konamiInvaderSwarm = null;
+    this.konamiProjectiles = null;
+
+    this.konamiTankImg = null;
+    this.konamiInvaderAllImgs = new ArrayList<PImage>();
+    this.konamiProjectilesAllImgs = new ArrayList<PImage>();
   }
 
   public void setup() {
@@ -93,7 +102,7 @@ public class App extends PApplet {
     this.invaderAllImgs.add(loadImage("invader2_armoured.png"));
     this.invaderAllImgs.add(loadImage("invader1_power.png"));
     this.invaderAllImgs.add(loadImage("invader2_power.png"));
-    this.swarm = new InvaderSwarm(invaderAllImgs, this.projectileImg);
+    this.swarm = new InvaderSwarm(this.invaderAllImgs, this.projectileImg);
 
     this.leftBarrierAllImgs.add(loadImage("barrier_left1.png"));
     this.leftBarrierAllImgs.add(loadImage("barrier_left2.png"));
@@ -111,14 +120,36 @@ public class App extends PApplet {
     this.solidBarrierAllImgs.add(loadImage("barrier_solid2.png"));
     this.solidBarrierAllImgs.add(loadImage("barrier_solid3.png"));
 
-    this.barriers.add(new Barrier(leftBarrierAllImgs, topBarrierAllImgs, rightBarrierAllImgs, solidBarrierAllImgs, 308, BARRIER_TOP));
-    this.barriers.add(new Barrier(leftBarrierAllImgs, topBarrierAllImgs, rightBarrierAllImgs, solidBarrierAllImgs, 200, BARRIER_TOP));
-    this.barriers.add(new Barrier(leftBarrierAllImgs, topBarrierAllImgs, rightBarrierAllImgs, solidBarrierAllImgs, 416, BARRIER_TOP));
+    this.barriers.add(new Barrier(this.leftBarrierAllImgs, this.topBarrierAllImgs, this.rightBarrierAllImgs, this.solidBarrierAllImgs, 308, BARRIER_TOP));
+    this.barriers.add(new Barrier(this.leftBarrierAllImgs, this.topBarrierAllImgs, this.rightBarrierAllImgs, this.solidBarrierAllImgs, 200, BARRIER_TOP));
+    this.barriers.add(new Barrier(this.leftBarrierAllImgs, this.topBarrierAllImgs, this.rightBarrierAllImgs, this.solidBarrierAllImgs, 416, BARRIER_TOP));
 
     this.nextLevelImg = loadImage("nextlevel.png");
     this.gameOverImg = loadImage("gameover.png");
 
     this.scoreFont = createFont("PressStart2P-Regular.ttf", 10, false);
+
+    // Extension
+    this.konamiProjectilesAllImgs.add(loadImage("blade_projectile1.png"));
+    this.konamiProjectilesAllImgs.add(loadImage("blade_projectile2.png"));
+    this.konamiProjectilesAllImgs.add(loadImage("slime_projectile.png"));
+    this.konamiProjectilesAllImgs.add(loadImage("zurkon_projectile.png"));
+    this.konamiProjectilesAllImgs.add(loadImage("tesla_spike.png"));
+    this.konamiProjectilesAllImgs.add(loadImage("tesla_electricity.png"));
+    this.konamiProjectiles = new KonamiCurrentProjectiles(this.konamiProjectilesAllImgs);
+
+    this.konamiTankImg = loadImage("konami_tank.png");
+    this.konamiTank = new KonamiTank(this.konamiTankImg, this.konamiProjectilesAllImgs.subList(0, 2));
+
+    this.konamiInvaderAllImgs.add(loadImage("slime_invader1.png"));
+    this.konamiInvaderAllImgs.add(loadImage("slime_invader2.png"));
+    this.konamiInvaderAllImgs.add(loadImage("tesla_invader1.png"));
+    this.konamiInvaderAllImgs.add(loadImage("tesla_invader2.png"));
+    this.konamiInvaderAllImgs.add(loadImage("tesla_invader3.png"));
+    this.konamiInvaderAllImgs.add(loadImage("zurkon_invader1.png"));
+    this.konamiInvaderAllImgs.add(loadImage("zurkon_invader2.png"));
+
+    this.konamiInvaderSwarm = new KonamiInvaderSwarm(this.konamiInvaderAllImgs, this.konamiProjectilesAllImgs);
   }
 
   public void settings() {
@@ -144,6 +175,31 @@ public class App extends PApplet {
         this.gameOver = false;
         this.frameCounter = 0;
       }
+    } else if (this.konami) {
+      this.konamiTank.draw(this);
+
+      this.konamiInvaderSwarm.draw(this);
+      this.konamiInvaderSwarm.checkIfKonamiShoot(this.konamiProjectiles);
+
+      for(Barrier barrier : this.barriers) {
+        if (!barrier.isBroken()) {
+          barrier.draw(this);
+        }
+      }
+
+      this.konamiProjectiles.draw(this);
+
+      this.konamiProjectiles.checkCollisions(this.konamiInvaderSwarm, this.konamiTank, this.barriers);
+      this.konamiProjectiles.checkIfProjectilesOutside();
+
+      if (this.konamiTank.isDead() || this.konamiInvaderSwarm.getBottom() >= BARRIER_TOP - 10) {
+        endGame();
+      }
+
+      if (this.konamiInvaderSwarm.isDead()) {
+        endGame();
+      }
+
     } else {
       this.tank.draw(this);
 
@@ -164,16 +220,6 @@ public class App extends PApplet {
       this.currentScore += this.projectiles.checkCollisions(this.swarm, this.tank, this.barriers);
       this.projectiles.checkIfProjectilesOutside();
 
-      // Extension
-      if (this.konami) {
-        this.konamiFrameCounter++;
-
-        if (this.konamiFrameCounter == KONAMI_RATE) {
-          this.konamiFrameCounter = 0;
-          konamiShot();
-        }
-      }
-
       if (this.tank.isDead() || this.swarm.getBottom() >= BARRIER_TOP - 10) {
         endGame();
       }
@@ -192,28 +238,12 @@ public class App extends PApplet {
     if (!this.nextLevel && !this.gameOver) {
       if (e.getKeyCode() == 37) {
         this.tank.setLeft(true);
+        this.konamiTank.setLeft(true);
       }
 
       if (e.getKeyCode() == 39) {
         this.tank.setRight(true);
-      }
-
-      if (e.getKeyCode() == 32 && this.shootProjectile == true) {
-        this.projectiles.addProjectile(this.tank.getX() + this.tank.getWidth()/2, this.tank.getY(), true, false);
-        this.shootProjectile = false;
-
-        // Extension
-        if (this.konami) {
-          this.konamiImgCounter += 2;
-          this.konamiImgCounter %= 6;
-          this.tank.changeImage(this.invaderAllImgs.get(this.konamiImgCounter));
-        }
-      }
-
-      // Extension
-      if (konamiChecker.checkKonami(e.getKeyCode())) {
-        this.konami = !this.konami;
-        konami();
+        this.konamiTank.setRight(true);
       }
     }
   }
@@ -222,14 +252,26 @@ public class App extends PApplet {
     if (!this.nextLevel && !this.gameOver) {
       if (e.getKeyCode() == 37) {
         this.tank.setLeft(false);
+        this.konamiTank.setLeft(false);
       }
 
       if (e.getKeyCode() == 39) {
         this.tank.setRight(false);
+        this.konamiTank.setRight(false);
       }
 
       if (e.getKeyCode() == 32) {
-        this.shootProjectile = true;
+        if (this.konami) {
+          this.konamiProjectiles.addProjectile(this.konamiTank.getX() + this.tank.getWidth()/2, this.tank.getY(), true, 'B');
+        } else {
+          this.projectiles.addProjectile(this.tank.getX() + this.tank.getWidth()/2, this.tank.getY(), true, false);
+        }
+      }
+
+      // Extension
+      if (konamiChecker.checkKonami(e.getKeyCode())) {
+        endGame();
+        this.konami = !this.konami;
       }
     }
   }
@@ -238,9 +280,6 @@ public class App extends PApplet {
     reset();
     this.swarm.nextLevel();
     this.nextLevel = true;
-
-    // Extension
-    konami();
   }
 
   public void endGame() {
@@ -250,9 +289,8 @@ public class App extends PApplet {
     this.gameOver = true;
 
     // Extension
-    this.konami = false;
-    konami();
     this.konamiChecker.reset();
+    konamiReset();
   }
 
   public void reset() {
@@ -264,24 +302,11 @@ public class App extends PApplet {
   }
 
   //Extension
-  public void konami() {
-    if (this.konami) {
-      this.tank.changeImage(this.invaderAllImgs.get(0));
-      this.swarm.konami(this.tankImg);
-      this.konamiFrameCounter = 0;
-    } else {
-      this.tank.konamiReset();
-      this.swarm.konamiReset();
-      this.konamiFrameCounter = 0;
-    }
-  }
 
-  public void konamiShot() {
-    Random rand = new Random();
-    int x1 = rand.nextInt(100);
-    int x2 = rand.nextInt(100) + 540;
-    this.projectiles.addProjectile(x1, 0, false, false, true);
-    this.projectiles.addProjectile(x2, 0, false, false, true);
+  public void konamiReset() {
+    this.konamiTank.reset();
+    this.konamiInvaderSwarm.endGame();
+    this.konamiProjectiles.reset();
   }
 
   public static void main(String[] args) {

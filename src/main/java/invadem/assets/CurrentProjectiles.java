@@ -8,21 +8,16 @@ import java.util.ArrayList;
 
 public class CurrentProjectiles {
 
-  private List<Projectile> friendlyProjectiles;
-  private List<Projectile> enemyProjectiles;
+  protected List<Projectile> friendlyProjectiles;
+  protected List<Projectile> enemyProjectiles;
   private PImage projectileImg;
   private PImage powerProjectileImg;
-  // Extension
-  private List<Projectile> konamiProjectiles;
 
   public CurrentProjectiles(PImage projectileImg, PImage powerProjectileImg) {
     this.friendlyProjectiles = new ArrayList<Projectile>();
     this.enemyProjectiles = new ArrayList<Projectile>();
     this.projectileImg = projectileImg;
     this.powerProjectileImg = powerProjectileImg;
-
-    // Extension
-    this.konamiProjectiles = new ArrayList<Projectile>();
   }
 
   public void draw(PApplet app) {
@@ -31,11 +26,6 @@ public class CurrentProjectiles {
     }
 
     for (Projectile projectile : this.enemyProjectiles) {
-      projectile.draw(app);
-    }
-
-    // Extension
-    for (Projectile projectile : this.konamiProjectiles) {
       projectile.draw(app);
     }
   }
@@ -69,24 +59,15 @@ public class CurrentProjectiles {
         i--;
       }
     }
-
-    // Extension
-
-    for (int i = 0; i < this.konamiProjectiles.size(); i++) {
-      if (this.konamiProjectiles.get(i).isProjectileOutside()) {
-        this.konamiProjectiles.remove(i);
-        i--;
-      }
-    }
   }
 
   public int checkCollisions(InvaderSwarm swarm, Tank tank, List<Barrier> barriers) {
     int scoreChange = 0;
     for(Projectile projectile : this.friendlyProjectiles) {
-      scoreChange += swarm.checkCollisionWithProjectile(projectile);
+      scoreChange += swarm.checkCollisionWithProjectile(projectile, true);
       for (Barrier barrier : barriers) {
         if (!barrier.isBroken()) {
-          barrier.checkCollisionWithProjectile(projectile);
+          barrier.checkCollisionWithProjectile(projectile, true);
         }
       }
     }
@@ -95,11 +76,17 @@ public class CurrentProjectiles {
       projectile.checkCollisionWithAsset(tank);
       for (Barrier barrier : barriers) {
         if (!barrier.isBroken()) {
-          barrier.checkCollisionWithProjectile(projectile);
+          barrier.checkCollisionWithProjectile(projectile, false);
         }
       }
       for (Projectile otherProjectile : this.friendlyProjectiles) {
-        projectile.checkCollisionWithAsset(otherProjectile);
+        if (!otherProjectile.isDud()) {
+          projectile.checkCollisionWithAsset(otherProjectile);
+        }
+
+        if (!otherProjectile.isAlive()) {
+          otherProjectile.hit();
+        }
       }
     }
 
@@ -109,17 +96,6 @@ public class CurrentProjectiles {
   public void reset() {
     this.friendlyProjectiles.clear();
     this.enemyProjectiles.clear();
-    this.konamiProjectiles.clear();
   }
 
-  // Extension
-  public void addProjectile(int x, int y, boolean friendly, boolean power, boolean konami) {
-    if (konami) {
-      Projectile projectile = new Projectile(projectileImg, x, y);
-      projectile.setYVelocity(1);
-      this.konamiProjectiles.add(projectile);
-    } else {
-      addProjectile(x, y, friendly, power);
-    }
-  }
 }
