@@ -1,7 +1,5 @@
 package invadem;
 
-import invadem.MovableAsset;
-
 import processing.core.PApplet;
 import processing.core.PImage;
 

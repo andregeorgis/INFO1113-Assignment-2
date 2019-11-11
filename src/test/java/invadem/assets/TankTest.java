@@ -1,7 +1,5 @@
 package invadem.assets;
 
-import invadem.assets.Tank;
-
 import processing.core.PApplet;
 import processing.core.PImage;
 
@@ -251,19 +249,4 @@ public class TankTest {
     assertEquals(x, 309);
   }
 
-  @Test
-  public void testTankKonamiReset() {
-    PImage img = new PImage();
-
-    PImage currentImage = this.tank.getImage();
-    assertNull(currentImage);
-
-    this.tank.changeImage(img);
-    currentImage = this.tank.getImage();
-    assertNotNull(currentImage);
-
-    this.tank.konamiReset();
-    currentImage = this.tank.getImage();
-    assertNull(currentImage);
-  }
 }

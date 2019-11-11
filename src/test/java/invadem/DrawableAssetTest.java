@@ -1,7 +1,5 @@
 package invadem;
 
-import invadem.DrawableAsset;
-
 import processing.core.PApplet;
 import processing.core.PImage;
 

@@ -1,7 +1,5 @@
 package invadem.assets;
 
-import invadem.assets.Tank;
-
 import processing.core.PApplet;
 import processing.core.PImage;
 
@@ -16,6 +14,7 @@ public class InvaderTest {
   private Invader invaderOne;
   private Invader invaderTwo;
   private Invader invaderThree;
+  private Invader invaderFour;
 
   @Before
   public void setup() {
@@ -60,7 +59,7 @@ public class InvaderTest {
   }
 
   @Test
-  public void checkInvaderTickAndMovingStates() {
+  public void testInvaderTickAndMovingStates() {
     int x = this.invaderTwo.getX();
     int y = this.invaderTwo.getY();
     int xVelocity = this.invaderTwo.getXVelocity();
@@ -324,5 +323,133 @@ public class InvaderTest {
     assertEquals(xVelocity, 0);
     assertEquals(yVelocity, 1);
   }
-  
+
+  @Test
+  public void testInvaderAnimating() {
+    List<PImage> imgs = new ArrayList<PImage>();
+    PImage imgOne = new PImage();
+    PImage imgTwo = new PImage();
+    imgs.add(imgOne);
+    imgs.add(imgTwo);
+
+    this.invaderFour = new Invader(imgs, 0, 0);
+
+    PImage currentImage = this.invaderFour.getImage();
+    assertEquals(currentImage, imgOne);
+
+    for (int i = 0; i < 60; i ++) {
+      this.invaderFour.tick();
+    }
+
+    currentImage = this.invaderFour.getImage();
+    assertEquals(currentImage, imgOne);
+
+    this.invaderFour.tick();
+
+    currentImage = this.invaderFour.getImage();
+    assertEquals(currentImage, imgTwo);
+
+    for (int i = 0; i < 15; i ++) {
+      this.invaderFour.tick();
+    }
+
+    currentImage = this.invaderFour.getImage();
+    assertEquals(currentImage, imgTwo);
+
+    this.invaderFour.tick();
+
+    currentImage = this.invaderFour.getImage();
+    assertEquals(currentImage, imgOne);
+
+    for (int i = 0; i < 59; i ++) {
+      this.invaderFour.tick();
+    }
+
+    currentImage = this.invaderFour.getImage();
+    assertEquals(currentImage, imgOne);
+
+    this.invaderFour.tick();
+
+    currentImage = this.invaderFour.getImage();
+    assertEquals(currentImage, imgTwo);
+
+    for (int i = 0; i < 15; i ++) {
+      this.invaderFour.tick();
+    }
+
+    currentImage = this.invaderFour.getImage();
+    assertEquals(currentImage, imgTwo);
+
+    this.invaderFour.tick();
+
+    currentImage = this.invaderFour.getImage();
+    assertEquals(currentImage, imgOne);
+  }
+
+  @Test
+  public void testInvaderReset() {
+    int x = this.invaderThree.getX();
+    int y = this.invaderThree.getY();
+    int xVelocity = this.invaderThree.getXVelocity();
+    int yVelocity = this.invaderThree.getYVelocity();
+    assertEquals(x, 0);
+    assertEquals(y, 0);
+    assertEquals(xVelocity, 1);
+    assertEquals(yVelocity, 0);
+    assertTrue(this.invaderThree.isMoving());
+    assertTrue(this.invaderThree.isMovingRight());
+    assertFalse(this.invaderThree.isMovingDown());
+    assertFalse(this.invaderThree.isMovingLeft());
+
+    for (int i = 0; i < 100; i++) {
+      this.invaderThree.tick();
+    }
+
+    x = this.invaderThree.getX();
+    y = this.invaderThree.getY();
+    xVelocity = this.invaderThree.getXVelocity();
+    yVelocity = this.invaderThree.getYVelocity();
+    assertEquals(x, 18);
+    assertEquals(y, 8);
+    assertEquals(xVelocity, -1);
+    assertEquals(yVelocity, 0);
+    assertTrue(this.invaderThree.isMoving());
+    assertFalse(this.invaderThree.isMovingRight());
+    assertFalse(this.invaderThree.isMovingDown());
+    assertTrue(this.invaderThree.isMovingLeft());
+
+    this.invaderThree.reset(0, 0);
+
+    x = this.invaderThree.getX();
+    y = this.invaderThree.getY();
+    xVelocity = this.invaderThree.getXVelocity();
+    yVelocity = this.invaderThree.getYVelocity();
+    assertEquals(x, 0);
+    assertEquals(y, 0);
+    assertEquals(xVelocity, 1);
+    assertEquals(yVelocity, 0);
+    assertTrue(this.invaderThree.isMoving());
+    assertTrue(this.invaderThree.isMovingRight());
+    assertFalse(this.invaderThree.isMovingDown());
+    assertFalse(this.invaderThree.isMovingLeft());
+
+
+
+
+    int health = this.invaderThree.getHealth();
+    assertEquals(health, 1);
+    assertTrue(this.invaderThree.isAlive());
+
+    this.invaderThree.setHealth(0);
+    this.invaderThree.checkHealth();
+    health = this.invaderThree.getHealth();
+    assertEquals(health, 0);
+    assertFalse(this.invaderThree.isAlive());
+
+    this.invaderThree.reset(0, 0);
+    
+    health = this.invaderThree.getHealth();
+    assertEquals(health, 1);
+    assertTrue(this.invaderThree.isAlive());
+  }
 }
