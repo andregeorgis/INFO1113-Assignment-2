@@ -16,6 +16,8 @@ public class DrawableAssetTest {
   private DrawableAsset assetThree;
   private DrawableAsset assetFour;
 
+  // Anonymous classes are used to be able to instantiate a DrawableAsset (it is
+  // an abstract class)
   @Before
   public void setupDrawableAsset() {
     this.assetOne = new DrawableAsset((PImage)null, 1, 2, 3, 4, 5) {
@@ -34,16 +36,19 @@ public class DrawableAssetTest {
     };
   }
 
+  // Test construction (with multiple images)
   @Test
   public void testDrawableAssetConstructionOne() {
     assertNotNull(this.assetOne);
   }
 
+  // Test construction (with single image)
   @Test
   public void testDrawableAssetConstructionTwo() {
     assertNotNull(this.assetTwo);
   }
 
+  // Test getter methods
   @Test
   public void testDrawableAssetGetterMethods() {
     int x = this.assetOne.getX();
@@ -65,6 +70,7 @@ public class DrawableAssetTest {
     assertNull(img);
   }
 
+  // Test setter methods
   @Test
   public void testSetterMethods() {
     int x = this.assetTwo.getX();
@@ -98,6 +104,9 @@ public class DrawableAssetTest {
     assertEquals(health, 1);
   }
 
+  // Test methods relating to health
+  // .isAlive() -> checks if health >= 0
+  // loseHealth(int damage) -> reduces health by damage
   @Test
   public void testDrawableAssetIsAliveAndLoseHealth() {
     assertTrue(this.assetThree.isAlive());
@@ -114,6 +123,7 @@ public class DrawableAssetTest {
     assertEquals(health, 8);
   }
 
+  // Test that changing images actually changes images (and does so correctly)
   @Test
   public void drawableAssetChangingImages() {
     PImage tankImg = new PImage();

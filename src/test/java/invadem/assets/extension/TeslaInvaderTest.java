@@ -24,11 +24,13 @@ public class TeslaInvaderTest {
     this.invaderTwo = new TeslaInvader(imgs, 0, 0);
   }
 
+  // Test construction
   @Test
   public void testTeslaInvaderConstruction() {
     assertNotNull(this.invaderOne);
   }
 
+  // Test that we know when invader shoots
   @Test
   public void testElectrify() {
     assertFalse(this.invaderOne.isElectrified());
@@ -36,6 +38,7 @@ public class TeslaInvaderTest {
     assertTrue(this.invaderOne.isElectrified());
   }
 
+  // Test reset
   @Test
   public void testTeslaInvaderReset() {
     int health = this.invaderTwo.getHealth();
@@ -55,6 +58,7 @@ public class TeslaInvaderTest {
     assertFalse(this.invaderTwo.isElectrified());
   }
 
+  // Test that the appropriate image is displayed when shooting
   @Test
   public void testTelsaInvaderCheckState() {
     TeslaInvader invader;

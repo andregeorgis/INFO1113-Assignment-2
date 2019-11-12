@@ -21,11 +21,13 @@ public class ZurkonInvaderTest {
     this.invader = new ZurkonInvader(imgs, 0, 0);
   }
 
+  // Test construction
   @Test
   public void testZurkonInvaderConstruction() {
     assertNotNull(this.invader);
   }
 
+  // Test reset
   @Test
   public void testZurkonInvaderReset() {
     int health = this.invader.getHealth();

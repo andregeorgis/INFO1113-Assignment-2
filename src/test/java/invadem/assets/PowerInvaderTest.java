@@ -22,6 +22,7 @@ public class PowerInvaderTest {
     this.invaderOne = new PowerInvader(imgs, 0, 0);
   }
 
+  // Test construction
   @Test
   public void testInvaderConstruction() {
     assertNotNull(this.invaderOne);

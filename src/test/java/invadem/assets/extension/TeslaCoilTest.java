@@ -35,6 +35,7 @@ public class TeslaCoilTest {
     this.coilFour = new TeslaCoil(imgs, 0, 600);
   }
 
+  // Test construction
   @Test
   public void testTeslaCoilConstruction() {
     assertNotNull(this.coilOne);
@@ -43,6 +44,7 @@ public class TeslaCoilTest {
     assertNotNull(this.coilFour);
   }
 
+  // Test the rate ate which electricity turns on and off
   @Test
   public void testCoilZappingRate() {
     assertFalse(this.coilOne.isZapping());
@@ -60,6 +62,7 @@ public class TeslaCoilTest {
     assertFalse(this.coilOne.isZapping());
   }
 
+  // Test if arcs can be formed or not
   @Test
   public void testCanZapLeftAndRightAndCollisionsWithSpike() {
     Projectile projectile;
@@ -127,6 +130,7 @@ public class TeslaCoilTest {
     assertFalse(this.coilThree.canZapRight());
   }
 
+  // Test colliding into arc
   @Test
   public void testCollisionsWithArc() {
     Projectile projectile;

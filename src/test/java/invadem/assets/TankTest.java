@@ -15,12 +15,14 @@ public class TankTest {
     this.tank = new Tank(null);
   }
 
+  // Test construction
   @Test
   public void testTankConstruction() {
     Tank tank = new Tank(null);
     assertNotNull(tank);
   }
 
+  // Test tank moving left, right (or both :P)
   @Test
   public void testTankMovingStates() {
     assertFalse(this.tank.isMovingLeft());
@@ -39,6 +41,7 @@ public class TankTest {
     assertFalse(this.tank.isMovingRight());
   }
 
+  // Test the isDead() function - for end game condition
   @Test
   public void testTankHealthStates() {
     assertFalse(this.tank.isDead());
@@ -50,6 +53,7 @@ public class TankTest {
     assertFalse(this.tank.isDead());
   }
 
+  // Test resetting tank
   @Test
   public void testTankReset() {
     int x = this.tank.getX();
@@ -111,6 +115,7 @@ public class TankTest {
     assertFalse(right);
   }
 
+  // Test that movement is correct
   @Test
   public void testTankTick() {
     int x = this.tank.getX();
@@ -222,6 +227,7 @@ public class TankTest {
     assertEquals(yVelocity, 0);
   }
 
+  // Test that tank cannot go beyond bounds
   @Test
   public void testTankCheckBounds() {
     int x = this.tank.getX();

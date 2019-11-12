@@ -25,11 +25,13 @@ public class BladeProjectileTest {
     this.projectile = new BladeProjectile(imgs, 10, 10);
   }
 
+  // Test construction
   @Test
   public void testBladeProjectileConstruction() {
     assertNotNull(this.projectile);
   }
 
+  // Test motion is actually in a sine wave
   @Test
   public void testBladeProjectileTick() {
     PImage currentImage = this.projectile.getImage();

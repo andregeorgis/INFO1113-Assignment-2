@@ -17,11 +17,13 @@ public class PowerProjectileTest {
     this.projectileOne = new PowerProjectile(null, 0, 0);
   }
 
+  // Test construction
   @Test
   public void testPowerProjectileConstruction() {
     assertNotNull(this.projectileOne);
   }
 
+  // Test that it actually does 3 damage
   @Test
   public void testDamageDone() {
     DrawableAsset asset = new DrawableAsset((PImage)null, 1, 2, 3, 4, 5) {

@@ -12,17 +12,20 @@ public class KonamiTest {
     this.konami = new Konami();
   }
 
+  // Test construction
   @Test
   public void testKonamiConstruction() {
     assertNotNull(this.konami);
   }
 
+  // Test getting current position in sequence
   @Test
   public void testKonamiGetButton() {
     int button = this.konami.getButton();
     assertEquals(button, 0);
   }
 
+  // Test entering the code validly
   @Test
   public void testValidKonamiCode() {
     int button = this.konami.getButton();
@@ -73,6 +76,7 @@ public class KonamiTest {
     assertEquals(button, 0);
   }
 
+  // Test entering invalid keys from the start
   @Test
   public void checkKonamiInvalidKeys() {
     int button = this.konami.getButton();
@@ -103,6 +107,7 @@ public class KonamiTest {
     assertEquals(button, 0);
   }
 
+  // Test entering invalid keys partway through the sequence
   @Test
   public void checkKonamiWrongOrder() {
     int button = this.konami.getButton();
@@ -140,6 +145,7 @@ public class KonamiTest {
     assertEquals(button, 0);
   }
 
+  // Test resetting the sequence;
   @Test
   public void testKonamiReset() {
     int button = this.konami.getButton();

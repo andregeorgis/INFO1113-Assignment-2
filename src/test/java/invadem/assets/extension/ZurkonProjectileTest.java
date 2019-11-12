@@ -17,6 +17,7 @@ public class ZurkonProjectileTest {
     this.projectile = new ZurkonProjectile(null, 0, 0);
   }
 
+  // Test construction
   @Test
   public void testZurkonProjectileConstruction() {
     assertNotNull(this.projectile);

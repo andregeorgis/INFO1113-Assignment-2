@@ -33,6 +33,7 @@ public class BarrierTest {
     this.barrierSix = new Barrier(imgs, imgs, imgs, imgs, 0, 0);
   }
 
+  // Test construction
   @Test
   public void testBarrierConstruction() {
     assertNotNull(this.barrierOne);
@@ -43,6 +44,7 @@ public class BarrierTest {
     assertNotNull(this.barrierSix);
   }
 
+  // Test if correct number of components are generated
   @Test
   public void testNumberOfComponents() {
     int componentsInTopRow = this.barrierOne.getTopComponentRow().size();
@@ -54,6 +56,7 @@ public class BarrierTest {
     assertEquals(componentsInBottomRow, 2);
   }
 
+  // Test colliding with projectiles
   @Test
   public void testBarrierCollisionWithProjectileAndIsBroken() {
     int healthOne = this.barrierOne.getTopComponentRow().get(0).getHealth();
@@ -182,7 +185,7 @@ public class BarrierTest {
     assertEquals(healthSeven, 3);
     assertFalse(barrierOne.isBroken());
 
-    // Always checks top row first
+    // Checking that the top row is always checked first
     projectile = new Projectile(null, 10, 16);
 
     barrierOne.checkCollisionWithProjectile(projectile);
@@ -225,7 +228,7 @@ public class BarrierTest {
     assertEquals(healthSeven, 3);
     assertFalse(barrierOne.isBroken());
 
-    // If component is dead, its ignored
+    // Checking that if component is dead, it is ignored
     projectile = new Projectile(null, 10, 16);
 
     barrierOne.checkCollisionWithProjectile(projectile);
@@ -247,7 +250,7 @@ public class BarrierTest {
     assertEquals(healthSeven, 3);
     assertFalse(barrierOne.isBroken());
 
-    // Checking it can collide various components
+    // Checking that all components can actually be collided with
     projectile = new Projectile(null, 10, 32);
 
     barrierOne.checkCollisionWithProjectile(projectile);
@@ -438,7 +441,7 @@ public class BarrierTest {
     assertEquals(healthSeven, 0);
     assertTrue(barrierOne.isBroken());
 
-    // If another projectile is thrown, nothing is hit
+    // If another projectile is thrown after the barrier is broken, nothing is hit
     projectile = new Projectile(null, 30, 30);
     barrierOne.checkCollisionWithProjectile(projectile);
     projectile = new Projectile(null, 30, 30);
@@ -482,6 +485,7 @@ public class BarrierTest {
     assertTrue(barrierOne.isBroken());
   }
 
+  // Check if barrier changes boundaries correctly
   @Test
   public void testBarrierCheckBoundariesAndIsBroken() {
     int xLeft = this.barrierTwo.getXLeft();
@@ -1480,6 +1484,7 @@ public class BarrierTest {
     assertEquals(bottomRow, 0);
   }
 
+  // Testing that the barrier resets appropriately
   @Test
   public void testBarrierReset() {
     int healthOne = this.barrierSix.getTopComponentRow().get(0).getHealth();
@@ -1601,9 +1606,5 @@ public class BarrierTest {
     assertEquals(topRow, 0);
     assertEquals(bottomRow, 2);
     assertFalse(this.barrierSix.isBroken());
-
-
-
-
   }
 }

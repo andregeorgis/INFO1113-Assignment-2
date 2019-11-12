@@ -24,12 +24,14 @@ public class ArmouredInvaderTest {
     this.invaderTwo = new ArmouredInvader(imgs, 0, 0);
   }
 
+  // Test construction
   @Test
   public void testArmouredInvaderConstruction() {
     assertNotNull(this.invaderOne);
     assertNotNull(this.invaderTwo);
   }
 
+  // Test that it actually starts with 3 health
   @Test
   public void testKillingArmouredInvader() {
     PImage img = new PImage();
@@ -63,6 +65,7 @@ public class ArmouredInvaderTest {
     assertNull(img);
   }
 
+  // Test that it resets back to 3 health
   @Test
   public void testArmouredInvaderReset() {
     int health = this.invaderTwo.getHealth();

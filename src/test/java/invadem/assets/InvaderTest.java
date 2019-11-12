@@ -27,6 +27,7 @@ public class InvaderTest {
     this.invaderThree = new Invader(imgs, 0, 0);
   }
 
+  // Test construction
   @Test
   public void testInvaderConstruction() {
     assertNotNull(this.invaderOne);
@@ -34,6 +35,7 @@ public class InvaderTest {
     assertNotNull(this.invaderThree);
   }
 
+  // Test killing an invader
   @Test
   public void testKillingInvader() {
     PImage img = new PImage();
@@ -58,6 +60,7 @@ public class InvaderTest {
     assertNull(img);
   }
 
+  // Test that invader moves correctly
   @Test
   public void testInvaderTickAndMovingStates() {
     int x = this.invaderTwo.getX();
@@ -73,6 +76,8 @@ public class InvaderTest {
     assertEquals(xVelocity, 1);
     assertEquals(yVelocity, 0);
 
+    // Moving to the right
+
     this.invaderTwo.tick();
 
     x = this.invaderTwo.getX();
@@ -120,6 +125,8 @@ public class InvaderTest {
     assertEquals(xVelocity, 1);
     assertEquals(yVelocity, 0);
 
+    // Moving Down
+
     this.invaderTwo.tick();
 
     x = this.invaderTwo.getX();
@@ -150,6 +157,7 @@ public class InvaderTest {
     assertEquals(xVelocity, 0);
     assertEquals(yVelocity, 1);
 
+
     for (int i = 0; i < 14; i++) {
       this.invaderTwo.tick();
     }
@@ -166,6 +174,8 @@ public class InvaderTest {
     assertEquals(y, 38);
     assertEquals(xVelocity, 0);
     assertEquals(yVelocity, 1);
+
+    // Moving to the left
 
     this.invaderTwo.tick();
 
@@ -214,6 +224,8 @@ public class InvaderTest {
     assertEquals(xVelocity, -1);
     assertEquals(yVelocity, 0);
 
+    // Moving Down
+
     this.invaderTwo.tick();
 
     x = this.invaderTwo.getX();
@@ -261,6 +273,8 @@ public class InvaderTest {
     assertEquals(xVelocity, 0);
     assertEquals(yVelocity, 1);
 
+    // Moving to the right
+
     this.invaderTwo.tick();
 
     x = this.invaderTwo.getX();
@@ -307,6 +321,8 @@ public class InvaderTest {
     assertEquals(y, 46);
     assertEquals(xVelocity, 1);
     assertEquals(yVelocity, 0);
+
+    // Moving Down
 
     this.invaderTwo.tick();
 
@@ -324,6 +340,7 @@ public class InvaderTest {
     assertEquals(yVelocity, 1);
   }
 
+  // Test that invader animates correctly
   @Test
   public void testInvaderAnimating() {
     List<PImage> imgs = new ArrayList<PImage>();
@@ -337,12 +354,16 @@ public class InvaderTest {
     PImage currentImage = this.invaderFour.getImage();
     assertEquals(currentImage, imgOne);
 
+    // Moving Right
+
     for (int i = 0; i < 60; i ++) {
       this.invaderFour.tick();
     }
 
     currentImage = this.invaderFour.getImage();
     assertEquals(currentImage, imgOne);
+
+    // Moving Down
 
     this.invaderFour.tick();
 
@@ -355,6 +376,8 @@ public class InvaderTest {
 
     currentImage = this.invaderFour.getImage();
     assertEquals(currentImage, imgTwo);
+
+    // Moving Left
 
     this.invaderFour.tick();
 
@@ -368,6 +391,8 @@ public class InvaderTest {
     currentImage = this.invaderFour.getImage();
     assertEquals(currentImage, imgOne);
 
+    // Moving Down
+
     this.invaderFour.tick();
 
     currentImage = this.invaderFour.getImage();
@@ -380,12 +405,15 @@ public class InvaderTest {
     currentImage = this.invaderFour.getImage();
     assertEquals(currentImage, imgTwo);
 
+    // Moving Right
+
     this.invaderFour.tick();
 
     currentImage = this.invaderFour.getImage();
     assertEquals(currentImage, imgOne);
   }
 
+  // Test that invader resets appropriately
   @Test
   public void testInvaderReset() {
     int x = this.invaderThree.getX();
@@ -434,8 +462,6 @@ public class InvaderTest {
     assertFalse(this.invaderThree.isMovingLeft());
 
 
-
-
     int health = this.invaderThree.getHealth();
     assertEquals(health, 1);
     assertTrue(this.invaderThree.isAlive());
@@ -447,7 +473,7 @@ public class InvaderTest {
     assertFalse(this.invaderThree.isAlive());
 
     this.invaderThree.reset(0, 0);
-    
+
     health = this.invaderThree.getHealth();
     assertEquals(health, 1);
     assertTrue(this.invaderThree.isAlive());

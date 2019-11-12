@@ -37,11 +37,13 @@ public class InvaderSwarmTest {
     this.swarmOne = new InvaderSwarm(imgs);
   }
 
+  // Test construction
   @Test
   public void testInvaderSwarmConstruction() {
     assertNotNull(this.swarmOne);
   }
 
+  // Test that invaders are generated correctly (right spots and right types)
   @Test
   public void testInvaderGenerating() {
     List<Invader> invaders = this.swarmOne.getInvaders();
@@ -62,6 +64,7 @@ public class InvaderSwarmTest {
     }
   }
 
+  // Test function that provides number of alive invaders
   @Test
   public void testInvaderSwarmNumOfInvaders() {
     int numOfInvaders = this.swarmOne.numOfInvaders();
@@ -100,6 +103,7 @@ public class InvaderSwarmTest {
     this.swarmOne.reset();
   }
 
+  // Test resetting the swarm
   @Test
   public void testInvaderSwarmReset() {
     for (int i = 0; i < 4; i++) {
@@ -126,6 +130,7 @@ public class InvaderSwarmTest {
 
   }
 
+  // Test the change in random projectile rate when changing level or ending game
   @Test
   public void testInvaderSwarmNextLevelAndEndGame() {
     int projectileRate = this.swarmOne.getProjectileRate();
@@ -156,6 +161,7 @@ public class InvaderSwarmTest {
     assertEquals(projectileRate, 300);
   }
 
+  // Test that collisions are handled appropriately
   @Test
   public void testInvaderSwarmCollisionWithProjectile() {
     Projectile projectile;
@@ -206,6 +212,7 @@ public class InvaderSwarmTest {
 
   }
 
+  // Test that swarm boundaries are updated appropriately when invaders are killed
   @Test
   public void testInvaderSwarmCheckBoundaries() {
     this.swarmOne.checkBoundaries();
@@ -443,9 +450,5 @@ public class InvaderSwarmTest {
     assertEquals(bottomRow, 2);
 
     this.swarmOne.reset();
-
-
-
-
   }
 }

@@ -37,11 +37,13 @@ public class KonamiCurrentProjectilesTest {
     this.projectiles = new KonamiCurrentProjectiles(img);
   }
 
+  // Test construction
   @Test
   public void testKonamiCurrentProjectilesConstruction() {
     assertNotNull(this.projectiles);
   }
 
+  // Test adding a projectile - Blade, Slime, Zurkon or TeslaCoil
   @Test
   public void testKonamiCurrentProjectilesAddProjectile() {
     int numOfFriendlyProjectiles = this.projectiles.getFriendlyProjectiles().size();

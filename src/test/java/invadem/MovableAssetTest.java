@@ -16,6 +16,8 @@ public class MovableAssetTest {
   private MovableAsset assetThree;
   private MovableAsset assetFour;
 
+  // Anonymous classes are used to be able to instantiate a MovableAsset (it is
+  // an abstract class)
   @Before
   public void setup() {
     this.assetOne = new MovableAsset((PImage)null, 0, 0, 0, 0, 0, 1, 2) {
@@ -42,16 +44,19 @@ public class MovableAssetTest {
     };
   }
 
+  // Test construction (with multiple images)
   @Test
   public void testMovableAssetConstructionOne() {
     assertNotNull(this.assetOne);
   }
 
+  // Test construction (with single image)
   @Test
   public void testMovableAssetConstructionTwo() {
     assertNotNull(this.assetTwo);
   }
 
+  // Test getter methods
   @Test
   public void testMovableAssetGetterMethods() {
     int xVelocity = this.assetOne.getXVelocity();
@@ -61,6 +66,7 @@ public class MovableAssetTest {
     assertEquals(yVelocity, 2);
   }
 
+  // Test setter methods
   @Test
   public void testMovableAssetSetterMethods() {
     int xVelocity = this.assetTwo.getXVelocity();
@@ -76,6 +82,7 @@ public class MovableAssetTest {
     assertEquals(yVelocity, 5);
   }
 
+  // Test changing x and y by xVelocity and yVelocity
   @Test
   public void testMovableAssetChangeMethods() {
     int x = this.assetThree.getX();
@@ -91,6 +98,7 @@ public class MovableAssetTest {
     assertEquals(y, 5);
   }
 
+  // Test checking whether or not asset is moving
   @Test
   public void testMovableAssetIsMoving() {
     assertFalse(this.assetFour.isMoving());

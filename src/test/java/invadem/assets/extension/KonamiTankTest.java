@@ -14,12 +14,10 @@ public class KonamiTankTest {
 
   @Before
   public void setup() {
-    List<PImage> imgs = new ArrayList<PImage>();
-    imgs.add(null);
-    imgs.add(null);
-    this.tank = new KonamiTank(null, imgs);
+    this.tank = new KonamiTank(null);
   }
 
+  // Test construction
   @Test
   public void testKonamiTankConstruction() {
     assertNotNull(this.tank);

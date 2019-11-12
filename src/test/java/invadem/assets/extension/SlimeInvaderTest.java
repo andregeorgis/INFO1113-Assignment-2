@@ -21,11 +21,13 @@ public class SlimeInvaderTest {
     this.invader = new SlimeInvader(imgs, 0, 0);
   }
 
+  // Test construction
   @Test
   public void testSlimeInvaderConstruction() {
     assertNotNull(this.invader);
   }
 
+  // Test reset - correct health
   @Test
   public void testSlimeInvaderReset() {
     int health = this.invader.getHealth();

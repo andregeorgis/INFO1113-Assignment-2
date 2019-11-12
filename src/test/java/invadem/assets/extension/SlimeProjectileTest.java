@@ -17,6 +17,7 @@ public class SlimeProjectileTest {
     this.projectile = new SlimeProjectile(null, 0, 0);
   }
 
+  // Test construction and damage
   @Test
   public void testSlimeProjectileConstruction() {
     assertNotNull(this.projectile);

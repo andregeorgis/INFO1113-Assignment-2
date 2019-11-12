@@ -39,11 +39,13 @@ public class KonamiInvaderSwarmTest {
     this.swarm = new KonamiInvaderSwarm(imgs);
   }
 
+  // Test construction
   @Test
   public void testKonamiInvaderSwarmConstruction() {
     assertNotNull(this.swarm);
   }
 
+  // Test that invaders are generated properly - instances
   @Test
   public void testKonamiInvaderGenerating() {
     for (int i = 0; i < 4; i++) {
@@ -59,6 +61,8 @@ public class KonamiInvaderSwarmTest {
     }
   }
 
+  // Test that collisions are handled appropriately - checking health and
+  // missing entire swarm
   @Test
   public void testKonamiCheckCollisionWithProjectile() {
     Projectile projectile;

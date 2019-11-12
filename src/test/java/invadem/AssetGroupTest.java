@@ -13,6 +13,8 @@ public class AssetGroupTest {
   private AssetGroup assetGroupTwo;
   private AssetGroup assetGroupThree;
 
+  // Anonymous classes are used to be able to instantiate an AssetGroup (it is
+  // an abstract class)
   @Before
   public void setup() {
     this.assetGroupOne = new AssetGroup(1, 1, 10, 3, 1, 2, 5, 3) {
@@ -30,12 +32,14 @@ public class AssetGroupTest {
     };
   }
 
+  // Test construction
   @Test
   public void testAssetGroupConstruction() {
     assertNotNull(this.assetGroupOne);
     assertNotNull(this.assetGroupTwo);
   }
 
+  // Test getter methods
   @Test
   public void testGetterMethods() {
     int xLeft = this.assetGroupOne.getXLeft();
@@ -69,6 +73,7 @@ public class AssetGroupTest {
     assertEquals(assetHeight, 3);
   }
 
+  // Test setter methods
   @Test
   public void testSetterMethods() {
     int xLeft = this.assetGroupTwo.getXLeft();

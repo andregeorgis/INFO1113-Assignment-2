@@ -17,6 +17,7 @@ public class TeslaSpikeTest {
     this.spike = new TeslaSpike(null, 0, 0);
   }
 
+  // Test construction
   @Test
   public void testTeslaSpikeConstruction() {
     assertNotNull(this.spike);

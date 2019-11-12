@@ -23,6 +23,7 @@ public class ProjectileTest {
     this.projectileFour = new Projectile(null, 100, 100);
   }
 
+  // Test construction
   @Test
   public void testProjectileConstruction() {
     assertNotNull(this.projectileOne);
@@ -31,6 +32,7 @@ public class ProjectileTest {
     assertNotNull(this.projectileFour);
   }
 
+  // Test forcfefully "hitting" a projectile
   @Test
   public void testProjectileHit() {
     assertFalse(this.projectileOne.isDud());
@@ -40,6 +42,7 @@ public class ProjectileTest {
     assertTrue(this.projectileOne.isDud());
   }
 
+  // Test the movement of a projectile is as expected
   @Test
   public void testProjectileMoving() {
     int x = this.projectileTwo.getX();
@@ -64,12 +67,14 @@ public class ProjectileTest {
     assertEquals(y, 0);
   }
 
+  // Test getting the damage
   @Test
   public void testProjectileGetterMethod() {
     int damage = this.projectileOne.getDamage();
     assertEquals(damage, 1);
   }
 
+  // Test that projectiles are correctly classified as outside - if far enough
   @Test
   public void testProjectileIsOutside() {
     int y = this.projectileThree.getY();
@@ -97,6 +102,8 @@ public class ProjectileTest {
     assertTrue(this.projectileThree.isProjectileOutside());
   }
 
+  // Test colliding projectiles with other assets - damage done and if projectile
+  // is hit
   @Test
   public void testProjectileCollisions() {
     PImage img = new PImage();

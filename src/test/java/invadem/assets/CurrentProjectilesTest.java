@@ -22,11 +22,14 @@ public class CurrentProjectilesTest {
     this.currentProjectiles = new CurrentProjectiles(this.projectileImg, this.powerProjectileImg);
   }
 
+  // Testing construction
   @Test
   public void testCurrentProjectilesConstruction() {
     assertNotNull(this.currentProjectiles);
   }
 
+  // Testing adding projectiles - both friendly and enemy AND both power and
+  // regular
   @Test
   public void testAddProjectileAndReset() {
     int numOfFriendlyProjectiles = this.currentProjectiles.getFriendlyProjectiles().size();
@@ -73,6 +76,7 @@ public class CurrentProjectilesTest {
     assertEquals(numOfEnemyProjectiles, 0);
   }
 
+  // Testing if projectiles are removed when outside the screen
   @Test
   public void testCheckIfCurrentProjectilesOutside() {
     int numOfFriendlyProjectiles = this.currentProjectiles.getFriendlyProjectiles().size();
@@ -109,6 +113,7 @@ public class CurrentProjectilesTest {
     this.currentProjectiles.reset();
   }
 
+  // Testing that collisions are handled correctly
   @Test
   public void testCurrentProjectilesCheckCollision() {
     List<PImage> imgs = new ArrayList<PImage>();
