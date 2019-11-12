@@ -163,8 +163,8 @@ public class InvaderSwarm extends AssetGroup {
       checkCollision = true;
     }
 
-    for (Invader invader : this.invaders) {
-      if (checkCollision) {
+    if (checkCollision) {
+      for (Invader invader : this.invaders) {
         if (invader.isAlive() && projectile.checkCollisionWithAsset(invader)) {
           invader.checkHealth();
 

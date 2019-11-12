@@ -19,6 +19,7 @@ public class BladeProjectile extends Projectile {
 
   public BladeProjectile(List<PImage> imgs, int x, int y) {
     super(imgs.get(0), x, y, WIDTH, HEIGHT);
+    this.x -= 7;
     this.xInitial = x;
     this.allImgs = imgs;
     this.width = WIDTH;
@@ -36,7 +37,7 @@ public class BladeProjectile extends Projectile {
   public void tick() {
     changeY();
     this.xCount = (this.xCount + 1) % 63;
-    setX((int)(this.xInitial - 7 * Math.cos(xCount / 10)));
+    setX((int)(this.xInitial - 7 * Math.cos(this.xCount / 10)));
 
     if (this.img == this.allImgs.get(0)) {
       changeImage(this.allImgs.get(1));

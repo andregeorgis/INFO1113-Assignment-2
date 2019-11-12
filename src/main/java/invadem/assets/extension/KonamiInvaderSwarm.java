@@ -38,10 +38,17 @@ public class KonamiInvaderSwarm extends InvaderSwarm {
   }
 
   public int checkCollisionWithProjectile(Projectile projectile) {
+    boolean checkCollision = false;
     boolean invaderKilled = false;
 
-    if (!(projectile.getY() + projectile.getHeight() > this.yBottom || (projectile.getY() < this.yTop)) &&
-        !(projectile.getX() + projectile.getWidth() > this.xRight || (projectile.getX() < this.xLeft))) {
+    if (this.xLeft < (projectile.getX() + projectile.getWidth()) &&
+        this.xRight > projectile.getX() &&
+        this.yTop < (projectile.getY() + projectile.getHeight()) &&
+        this.yBottom > projectile.getY()) {
+      checkCollision = true;
+    }
+
+    if (checkCollision) {
       for (Invader invader : this.invaders) {
         if (invader.isAlive() && projectile.checkCollisionWithAsset(invader)) {
           invader.checkHealth();
@@ -86,8 +93,9 @@ public class KonamiInvaderSwarm extends InvaderSwarm {
     } else if (this.invaders.get(randInt) instanceof SlimeInvader) {
       projectiles.addProjectile(projectileX - 2, projectileY, false, 'S');
     } else {
-      projectiles.addProjectile(projectileX - 41, projectileY, false, 'T');
-      ;
+      projectiles.addProjectile(projectileX - 71, projectileY, false, 'T');
+      TeslaInvader tempInvader = (TeslaInvader)this.invaders.get(randInt);
+      tempInvader.electrify();
     }
   }
 }

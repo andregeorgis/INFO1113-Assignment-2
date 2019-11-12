@@ -38,8 +38,6 @@ public class TeslaCoil extends Projectile {
   }
 
   public void draw(PApplet app) {
-    this.rateCounter++;
-
     this.spikeLeft.draw(app);
     this.spikeMiddle.draw(app);
     this.spikeRight.draw(app);
@@ -59,6 +57,7 @@ public class TeslaCoil extends Projectile {
   }
 
   public void tick() {
+    this.rateCounter++;
     changeY();
     this.spikeLeft.tick();
     this.spikeMiddle.tick();
@@ -69,6 +68,12 @@ public class TeslaCoil extends Projectile {
       this.rateCounter = 0;
     }
   }
+
+  public boolean canZapLeft() {return this.canZapLeft;}
+
+  public boolean canZapRight() {return this.canZapRight;}
+
+  public boolean isZapping() {return this.zap;}
 
   public boolean checkCollisionWithAsset(DrawableAsset asset) {
     boolean returnBool = false;

@@ -55,6 +55,7 @@ public class CurrentProjectilesTest {
 
     assertEquals(numOfFriendlyProjectiles, 1);
     assertEquals(numOfEnemyProjectiles, 2);
+    assertTrue(this.currentProjectiles.getEnemyProjectiles().get(1) instanceof PowerProjectile);
 
     PImage imageOne = this.currentProjectiles.getFriendlyProjectiles().get(0).getImage();
     PImage imageTwo = this.currentProjectiles.getEnemyProjectiles().get(0).getImage();

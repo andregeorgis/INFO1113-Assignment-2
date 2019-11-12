@@ -52,11 +52,11 @@ public class InvaderSwarmTest {
         assertEquals(invaders.get(i * 10 + j).getY(), 20 + i * 28);
 
         if (i == 0) {
-          assertEquals(invaders.get(j).getImage(), this.armouredInvaderImgOne);
+          assertTrue(invaders.get(j) instanceof ArmouredInvader);
         } else if (i == 1) {
-          assertEquals(invaders.get(10 + j).getImage(), this.powerInvaderImgOne);
+          assertTrue(invaders.get(10 + j) instanceof PowerInvader);
         } else {
-          assertEquals(invaders.get(i * 10 + j).getImage(), this.regularInvaderImgOne);
+          assertTrue(invaders.get(i * 10 + j) instanceof Invader);
         }
       }
     }
