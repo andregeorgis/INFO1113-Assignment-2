@@ -19,14 +19,14 @@ public class AssetGroupTest {
       public void draw(PApplet app) {;}
       public void checkBoundaries() {;}
       public void reset() {;}
-      public int checkCollisionWithProjectile(Projectile projectile, boolean friendly) {return 0;}
+      public int checkCollisionWithProjectile(Projectile projectile) {return 0;}
     };
 
     this.assetGroupTwo = new AssetGroup(40, 40, 268, 100, 4, 10, 16, 16) {
       public void draw(PApplet app) {;}
       public void checkBoundaries() {;}
       public void reset() {;}
-      public int checkCollisionWithProjectile(Projectile projectile, boolean friendly) {return 0;}
+      public int checkCollisionWithProjectile(Projectile projectile) {return 0;}
     };
   }
 

@@ -15,13 +15,8 @@ public class KonamiInvaderSwarm extends InvaderSwarm {
 
   public final static int PROJECTILE_RATE = 45;
 
-  private PImage teslaSpikeImg;
-  private PImage teslaTeslaImg;
-  private PImage zurkonProjectileImg;
-  private PImage slimeProjectileImg;
-
-  public KonamiInvaderSwarm(List<PImage> invaderImgs, List<PImage> projectileImgs) {
-    super(invaderImgs, projectileImgs.get(0));
+  public KonamiInvaderSwarm(List<PImage> invaderImgs) {
+    super(invaderImgs);
     this.invaders = new ArrayList<Invader>();
     List<PImage> slimeImgs = invaderImgs.subList(0, 2);
     List<PImage> teslaImgs = invaderImgs.subList(2, 5);
@@ -40,10 +35,6 @@ public class KonamiInvaderSwarm extends InvaderSwarm {
     }
 
     this.projectileTimer = 0;
-    this.teslaSpikeImg = projectileImgs.get(0);
-    this.teslaTeslaImg = projectileImgs.get(1);
-    this.zurkonProjectileImg = projectileImgs.get(2);
-    this.zurkonProjectileImg = projectileImgs.get(3);
   }
 
   public int checkCollisionWithProjectile(Projectile projectile) {

@@ -14,6 +14,8 @@ public class Barrier extends AssetGroup {
   private List<BarrierComponent> middleComponentRow;
   private List<BarrierComponent> bottomComponentRow;
   private boolean broken;
+  private int xInitial;
+  private int yInitial;
 
   public static final int WIDTH_INITIAL = 24;
   public static final int HEIGHT_INITIAL = 24;
@@ -33,6 +35,8 @@ public class Barrier extends AssetGroup {
     this.bottomComponentRow.add(new BarrierComponent(solid, x + 2 * BarrierComponent.WIDTH, y + 2 * BarrierComponent.HEIGHT));
 
     this.broken = false;
+    this.xInitial = x;
+    this.yInitial = y;
   }
 
   public void draw(PApplet app) {
@@ -69,10 +73,10 @@ public class Barrier extends AssetGroup {
     }
 
 
-    this.xLeft -= this.leftCol * this.assetWidth;
-    this.xRight += (2 - this.rightCol) * this.assetWidth;
-    this.yTop -= this.topRow * this.assetHeight;
-    this.yBottom += (2 - this.bottomRow) * this.assetHeight;
+    this.xLeft = this.xInitial;
+    this.xRight = this.xInitial + WIDTH_INITIAL;
+    this.yTop = this.yInitial;
+    this.yBottom = this.yInitial + HEIGHT_INITIAL;
     this.leftCol = 0;
     this.rightCol = 2;
     this.topRow = 0;
@@ -81,6 +85,12 @@ public class Barrier extends AssetGroup {
   }
 
   public boolean isBroken() {return this.broken;}
+
+  public List<BarrierComponent> getTopComponentRow() {return this.topComponentRow;}
+
+  public List<BarrierComponent> getMiddleComponentRow() {return this.middleComponentRow;}
+
+  public List<BarrierComponent> getBottomComponentRow() {return this.bottomComponentRow;}
 
   public void checkBoundaries() {
     int i;
@@ -149,6 +159,8 @@ public class Barrier extends AssetGroup {
             break;
           }
         }
+      } else {
+        break;
       }
     }
 
@@ -176,6 +188,8 @@ public class Barrier extends AssetGroup {
             break;
           }
         }
+      } else {
+        break;
       }
     }
 
@@ -185,12 +199,12 @@ public class Barrier extends AssetGroup {
     }
 
     // Check if broken
-    if (leftCol > rightCol || topRow > bottomRow) {
+    if (this.xLeft >= this.xRight || this.yTop >= this.yBottom || this.leftCol == this.rightCol || this.topRow == this.bottomRow) {
       this.broken = true;
     }
   }
 
-  public int checkCollisionWithProjectile(Projectile projectile, boolean friendly) {
+  public int checkCollisionWithProjectile(Projectile projectile) {
     boolean checkCollision = false;
     boolean componentKilled = false;
 
@@ -239,6 +253,5 @@ public class Barrier extends AssetGroup {
 
     return 0;
   }
-
 
 }

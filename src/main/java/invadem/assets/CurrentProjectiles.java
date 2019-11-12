@@ -30,6 +30,10 @@ public class CurrentProjectiles {
     }
   }
 
+  public List<Projectile> getFriendlyProjectiles() {return this.friendlyProjectiles;}
+
+  public List<Projectile> getEnemyProjectiles() {return this.enemyProjectiles;}
+
   public void addProjectile(int x, int y, boolean friendly, boolean power) {
     if (friendly) {
       this.friendlyProjectiles.add(new Projectile(projectileImg, x, y));
@@ -64,10 +68,10 @@ public class CurrentProjectiles {
   public int checkCollisions(InvaderSwarm swarm, Tank tank, List<Barrier> barriers) {
     int scoreChange = 0;
     for(Projectile projectile : this.friendlyProjectiles) {
-      scoreChange += swarm.checkCollisionWithProjectile(projectile, true);
+      scoreChange += swarm.checkCollisionWithProjectile(projectile);
       for (Barrier barrier : barriers) {
         if (!barrier.isBroken()) {
-          barrier.checkCollisionWithProjectile(projectile, true);
+          barrier.checkCollisionWithProjectile(projectile);
         }
       }
     }
@@ -76,7 +80,7 @@ public class CurrentProjectiles {
       projectile.checkCollisionWithAsset(tank);
       for (Barrier barrier : barriers) {
         if (!barrier.isBroken()) {
-          barrier.checkCollisionWithProjectile(projectile, false);
+          barrier.checkCollisionWithProjectile(projectile);
         }
       }
       for (Projectile otherProjectile : this.friendlyProjectiles) {

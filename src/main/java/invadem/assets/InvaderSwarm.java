@@ -14,7 +14,6 @@ public class InvaderSwarm extends AssetGroup {
   protected List<Invader> invaders;
   protected int projectileTimer;
   protected int projectileRate;
-  protected PImage projectileImg;
 
   public static final int X_INITIAL = 171;
   public static final int Y_INITIAL = 20;
@@ -23,7 +22,7 @@ public class InvaderSwarm extends AssetGroup {
   public static final int GAP = 12;
   public static final int PROJECTILE_RATE_INITIAL = 300;
 
-  public InvaderSwarm(List<PImage> imgs, PImage projectileImg) {
+  public InvaderSwarm(List<PImage> imgs) {
     super(X_INITIAL, Y_INITIAL, WIDTH_INITIAL, HEIGHT_INITIAL, 4, 10, Invader.WIDTH, Invader.HEIGHT);
     this.invaders = new ArrayList<Invader>();
     List<PImage> regularImgs = imgs.subList(0, 2);
@@ -44,7 +43,6 @@ public class InvaderSwarm extends AssetGroup {
 
     this.projectileTimer = 0;
     this.projectileRate = PROJECTILE_RATE_INITIAL;
-    this.projectileImg = projectileImg;
   }
 
   public void draw(PApplet app) {
@@ -76,6 +74,10 @@ public class InvaderSwarm extends AssetGroup {
     this.yTop += changeY;
     this.yBottom += changeY;
   }
+
+  public List<Invader> getInvaders() {return this.invaders;}
+
+  public int getProjectileRate() {return this.projectileRate;}
 
   public void checkIfShoot(CurrentProjectiles projectiles) {
     if (this.projectileTimer == this.projectileRate) {
@@ -149,7 +151,7 @@ public class InvaderSwarm extends AssetGroup {
     }
   }
 
-  public int checkCollisionWithProjectile(Projectile projectile, boolean friendly) {
+  public int checkCollisionWithProjectile(Projectile projectile) {
     boolean checkCollision = false;
     boolean invaderKilled = false;
     int scoreChange = 0;
@@ -218,8 +220,6 @@ public class InvaderSwarm extends AssetGroup {
   }
 
   public boolean isDead() {return numOfInvaders() == 0;}
-
-  public int getBottom() {return this.yBottom;}
 
   public void shootProjectile(CurrentProjectiles projectiles) {
     List<Integer> temp = new ArrayList<Integer>();

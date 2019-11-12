@@ -102,7 +102,7 @@ public class App extends PApplet {
     this.invaderAllImgs.add(loadImage("invader2_armoured.png"));
     this.invaderAllImgs.add(loadImage("invader1_power.png"));
     this.invaderAllImgs.add(loadImage("invader2_power.png"));
-    this.swarm = new InvaderSwarm(this.invaderAllImgs, this.projectileImg);
+    this.swarm = new InvaderSwarm(this.invaderAllImgs);
 
     this.leftBarrierAllImgs.add(loadImage("barrier_left1.png"));
     this.leftBarrierAllImgs.add(loadImage("barrier_left2.png"));
@@ -149,7 +149,7 @@ public class App extends PApplet {
     this.konamiInvaderAllImgs.add(loadImage("zurkon_invader1.png"));
     this.konamiInvaderAllImgs.add(loadImage("zurkon_invader2.png"));
 
-    this.konamiInvaderSwarm = new KonamiInvaderSwarm(this.konamiInvaderAllImgs, this.konamiProjectilesAllImgs);
+    this.konamiInvaderSwarm = new KonamiInvaderSwarm(this.konamiInvaderAllImgs);
   }
 
   public void settings() {
@@ -192,7 +192,7 @@ public class App extends PApplet {
       this.konamiProjectiles.checkCollisions(this.konamiInvaderSwarm, this.konamiTank, this.barriers);
       this.konamiProjectiles.checkIfProjectilesOutside();
 
-      if (this.konamiTank.isDead() || this.konamiInvaderSwarm.getBottom() >= BARRIER_TOP - 10) {
+      if (this.konamiTank.isDead() || this.konamiInvaderSwarm.getYBottom() >= BARRIER_TOP - 10) {
         endGame();
       }
 
@@ -220,7 +220,7 @@ public class App extends PApplet {
       this.currentScore += this.projectiles.checkCollisions(this.swarm, this.tank, this.barriers);
       this.projectiles.checkIfProjectilesOutside();
 
-      if (this.tank.isDead() || this.swarm.getBottom() >= BARRIER_TOP - 10) {
+      if (this.tank.isDead() || this.swarm.getYBottom() >= BARRIER_TOP - 10) {
         endGame();
       }
 

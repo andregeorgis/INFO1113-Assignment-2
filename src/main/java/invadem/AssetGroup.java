@@ -40,7 +40,7 @@ public abstract class AssetGroup {
 
   public abstract void reset();
 
-  public abstract int checkCollisionWithProjectile(Projectile projectile, boolean friendly);
+  public abstract int checkCollisionWithProjectile(Projectile projectile);
 
   public int getXLeft() {return this.xLeft;}
 
