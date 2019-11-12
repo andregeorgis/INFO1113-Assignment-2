@@ -1,3 +1,7 @@
+/*
+  Responsible for distinguishing between Projectile and ZurkonProjectile.
+*/
+
 package invadem.assets.extension;
 
 import invadem.assets.Projectile;
@@ -6,7 +10,7 @@ import processing.core.PApplet;
 import processing.core.PImage;
 
 public class ZurkonProjectile extends Projectile {
-
+  // Constants
   public final static int WIDTH = 4;
   public final static int HEIGHT = 6;
 

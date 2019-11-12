@@ -1,3 +1,7 @@
+/*
+  Responsible for defining the behaviour of the Tank.
+*/
+
 package invadem.assets;
 
 import processing.core.PApplet;
@@ -5,6 +9,7 @@ import processing.core.PImage;
 import invadem.MovableAsset;
 
 public class Tank extends MovableAsset {
+  // Constants
   public static final int WIDTH = 22;
   public static final int HEIGHT = 14;
   public static final int X_INITIAL = 320 - WIDTH/2;
@@ -15,6 +20,7 @@ public class Tank extends MovableAsset {
   public static final int X_BOUND_RIGHT = 460 - WIDTH;
   public static final int HEALTH_INITIAL = 3;
 
+  // Booleans that track if the tank should be moving left or right
   protected boolean left;
   protected boolean right;
 
@@ -30,6 +36,8 @@ public class Tank extends MovableAsset {
     tick();
   }
 
+  // Using booleans "left" and "right" to decide if (and where) to move - these
+  // booleans are set in the App class
   public void tick() {
     if (this.left && this.right) {
       setXVelocity(0);
@@ -43,6 +51,7 @@ public class Tank extends MovableAsset {
     changeX();
   }
 
+  // Tank cannot move outside of set bounds
   public void checkBounds() {
     if (this.x < X_BOUND_LEFT) {
       this.x = X_BOUND_LEFT;
@@ -53,14 +62,17 @@ public class Tank extends MovableAsset {
     }
   }
 
+  // Methods for checking movement
   public boolean isMovingLeft() {return this.left;}
 
   public boolean isMovingRight() {return this.right;}
 
+  // Methods for setting movement
   public void setLeft(boolean state) {this.left = state;}
 
   public void setRight(boolean state) {this.right = state;}
 
+  // Reset all attributes
   public void reset() {
     this.x = X_INITIAL;
     this.y = Y_INITIAL;
@@ -71,5 +83,6 @@ public class Tank extends MovableAsset {
     this.right = false;
   }
 
+  // Check if dead for end game condition
   public boolean isDead() {return this.health <= 0;}
 }

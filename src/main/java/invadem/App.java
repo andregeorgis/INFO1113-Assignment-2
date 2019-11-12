@@ -1,3 +1,22 @@
+/*
+  Responsible for creating the window for the game, and controlling the display.
+
+  EXTENSION:
+    - Secret level with new invaders and tank
+    - Important bits:
+      - Accessed by entering the Konami Code (UP, UP, DOWN, DOWN, LEFT, RIGHT,
+        LEFT, RIGHT, B, A, BACKSPACE)
+      - Tank now shoots projectiles in a sine wave
+      - New enemy projectile are three "electrical spikes" that generate a small
+        interval of electricity that can damage tanks and projectiles (but not
+        barriers)
+        - The electricity turns on and off at a set rate - when it is off it is
+          possible for the tank to be left unharmed
+        - The spikes themselves can damage barriers as well
+      - Can be exited by entering the Konami Code again
+*/
+
+
 package invadem;
 
 import processing.core.PApplet;
@@ -14,29 +33,31 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class App extends PApplet {
-
+  // Constants
   public static final int WIDTH = 640;
   public static final int HEIGHT = 480;
   public static final int BARRIER_TOP = 420;
   public static final int HIGHSCORE_INITIAL = 10000;
 
-  private Tank tank;
-  private InvaderSwarm swarm;
-  private List<Barrier> barriers;
-  private CurrentProjectiles projectiles;
-  private boolean nextLevel;
-  private boolean gameOver;
-  private int frameCounter;
-  private int highScore;
-  private int currentScore;
+  // Game Objects
+  protected Tank tank;
+  protected InvaderSwarm swarm;
+  protected List<Barrier> barriers;
+  protected CurrentProjectiles projectiles;
+  protected boolean nextLevel;
+  protected boolean gameOver;
+  protected int frameCounter;
+  protected int highScore;
+  protected int currentScore;
 
-  // Extension
-  private boolean konami;
-  private Konami konamiChecker;
-  private KonamiTank konamiTank;
-  private KonamiInvaderSwarm konamiInvaderSwarm;
-  private KonamiCurrentProjectiles konamiProjectiles;
+  // Extension - Objects
+  protected boolean konami;
+  protected Konami konamiChecker;
+  protected KonamiTank konamiTank;
+  protected KonamiInvaderSwarm konamiInvaderSwarm;
+  protected KonamiCurrentProjectiles konamiProjectiles;
 
+  // Game Images and Font
   public static PImage tankImg;
   public static List<PImage> leftBarrierAllImgs;
   public static List<PImage> topBarrierAllImgs;
@@ -49,12 +70,13 @@ public class App extends PApplet {
   public PImage powerProjectileImg;
   public PFont scoreFont;
 
-  // Extension
+  // Extension - Images
   public static PImage konamiTankImg;
   public static List<PImage> konamiInvaderAllImgs;
   public static List<PImage> konamiProjectilesAllImgs;
 
   public App() {
+    // Initialising everything
     this.tank = null;
     this.swarm = null;
     this.barriers = new ArrayList<Barrier>();
@@ -87,15 +109,19 @@ public class App extends PApplet {
   }
 
   public void setup() {
+    // Setting up everything
     frameRate(60);
+    // Tank
     this.tankImg = loadImage("tank1.png");
     this.tank = new Tank(this.tankImg);
 
+    // Projectiles
     this.projectileImg = loadImage("projectile.png");
     this.powerProjectileImg = loadImage("projectile_lg.png");
 
     this.projectiles = new CurrentProjectiles(this.projectileImg, this.powerProjectileImg);
 
+    // Invaders
     this.invaderAllImgs.add(loadImage("invader1.png"));
     this.invaderAllImgs.add(loadImage("invader2.png"));
     this.invaderAllImgs.add(loadImage("invader1_armoured.png"));
@@ -104,6 +130,7 @@ public class App extends PApplet {
     this.invaderAllImgs.add(loadImage("invader2_power.png"));
     this.swarm = new InvaderSwarm(this.invaderAllImgs);
 
+    // Barriers
     this.leftBarrierAllImgs.add(loadImage("barrier_left1.png"));
     this.leftBarrierAllImgs.add(loadImage("barrier_left2.png"));
     this.leftBarrierAllImgs.add(loadImage("barrier_left3.png"));
@@ -124,12 +151,14 @@ public class App extends PApplet {
     this.barriers.add(new Barrier(this.leftBarrierAllImgs, this.topBarrierAllImgs, this.rightBarrierAllImgs, this.solidBarrierAllImgs, 200, BARRIER_TOP));
     this.barriers.add(new Barrier(this.leftBarrierAllImgs, this.topBarrierAllImgs, this.rightBarrierAllImgs, this.solidBarrierAllImgs, 416, BARRIER_TOP));
 
+    // Transition Displays
     this.nextLevelImg = loadImage("nextlevel.png");
     this.gameOverImg = loadImage("gameover.png");
 
+    // Score Displays
     this.scoreFont = createFont("PressStart2P-Regular.ttf", 10, false);
 
-    // Extension
+    // Extension Projectiles
     this.konamiProjectilesAllImgs.add(loadImage("blade_projectile1.png"));
     this.konamiProjectilesAllImgs.add(loadImage("blade_projectile2.png"));
     this.konamiProjectilesAllImgs.add(loadImage("slime_projectile.png"));
@@ -138,9 +167,11 @@ public class App extends PApplet {
     this.konamiProjectilesAllImgs.add(loadImage("tesla_electricity.png"));
     this.konamiProjectiles = new KonamiCurrentProjectiles(this.konamiProjectilesAllImgs);
 
+    // Extension Tank
     this.konamiTankImg = loadImage("konami_tank.png");
-    this.konamiTank = new KonamiTank(this.konamiTankImg, this.konamiProjectilesAllImgs.subList(0, 2));
+    this.konamiTank = new KonamiTank(this.konamiTankImg);
 
+    // Extension Invaders
     this.konamiInvaderAllImgs.add(loadImage("slime_invader1.png"));
     this.konamiInvaderAllImgs.add(loadImage("slime_invader2.png"));
     this.konamiInvaderAllImgs.add(loadImage("tesla_invader1.png"));
@@ -157,10 +188,12 @@ public class App extends PApplet {
   }
 
   public void draw() {
+    // Set up background and default font and fill (we want white text)
     background(0);
     textFont(this.scoreFont);
     fill(255);
 
+    // If we are transitioning to next level, only display nextLevelImg
     if (this.nextLevel) {
       this.frameCounter++;
       this.image(this.nextLevelImg, 259, 232, 122, 16);
@@ -168,14 +201,21 @@ public class App extends PApplet {
         this.nextLevel = false;
         this.frameCounter = 0;
       }
-    } else if (this.gameOver) {
+    }
+
+    // If we are transitioning to end of game, only display gameOverImg
+    else if (this.gameOver) {
       this.frameCounter++;
       this.image(this.gameOverImg, 264, 232, 122, 16);
       if (this.frameCounter == 120) {
         this.gameOver = false;
         this.frameCounter = 0;
       }
-    } else if (this.konami) {
+    }
+
+    // If Konami Code has been activated, display extension - "secret level"
+    else if (this.konami) {
+      // Draw Tank, Invaders, Barriers and Projectiles
       this.konamiTank.draw(this);
 
       this.konamiInvaderSwarm.draw(this);
@@ -189,9 +229,11 @@ public class App extends PApplet {
 
       this.konamiProjectiles.draw(this);
 
+      // Check Collisions and Projectiles Outside Screen
       this.konamiProjectiles.checkCollisions(this.konamiInvaderSwarm, this.konamiTank, this.barriers);
       this.konamiProjectiles.checkIfProjectilesOutside();
 
+      // Check End of Game conditions
       if (this.konamiTank.isDead() || this.konamiInvaderSwarm.getYBottom() >= BARRIER_TOP - 10) {
         endGame();
       }
@@ -200,7 +242,11 @@ public class App extends PApplet {
         endGame();
       }
 
-    } else {
+    }
+
+    // Displaying regular game
+    else {
+      // Draw Tank, Invaders, Barriers, Projectiles and Score
       this.tank.draw(this);
 
       this.swarm.draw(this);
@@ -217,9 +263,11 @@ public class App extends PApplet {
       text("SCORE: " + Integer.toString(this.currentScore), 40, 20);
       text("HIGH SCORE: " + Integer.toString(this.highScore), 430, 20);
 
+      // Check Collisions and Projectiles Outside Screen
       this.currentScore += this.projectiles.checkCollisions(this.swarm, this.tank, this.barriers);
       this.projectiles.checkIfProjectilesOutside();
 
+      // Check End of Game and Next Level conditions
       if (this.tank.isDead() || this.swarm.getYBottom() >= BARRIER_TOP - 10) {
         endGame();
       }
@@ -228,19 +276,23 @@ public class App extends PApplet {
         nextLevel();
       }
 
+      // Update high score if necessary
       if (this.currentScore > this.highScore) {
         this.highScore = this.currentScore;
       }
     }
   }
 
+  // Check for key presses
   public void keyPressed(KeyEvent e) {
+    // Only check keys if we are in a game
     if (!this.nextLevel && !this.gameOver) {
+      // Moving tank left
       if (e.getKeyCode() == 37) {
         this.tank.setLeft(true);
         this.konamiTank.setLeft(true);
       }
-
+      // Moving tank right
       if (e.getKeyCode() == 39) {
         this.tank.setRight(true);
         this.konamiTank.setRight(true);
@@ -248,27 +300,33 @@ public class App extends PApplet {
     }
   }
 
+  // Check for key releases
   public void keyReleased(KeyEvent e) {
+    // Only check keys if we are in a game
     if (!this.nextLevel && !this.gameOver) {
+      // Stop moving tank left
       if (e.getKeyCode() == 37) {
         this.tank.setLeft(false);
         this.konamiTank.setLeft(false);
       }
-
+      // Stop moving tank right
       if (e.getKeyCode() == 39) {
         this.tank.setRight(false);
         this.konamiTank.setRight(false);
       }
-
+      // Shoot tank projectile
       if (e.getKeyCode() == 32) {
+        // Extension Projectile
         if (this.konami) {
           this.konamiProjectiles.addProjectile(this.konamiTank.getX() + this.tank.getWidth()/2, this.tank.getY(), true, 'B');
-        } else {
+        }
+        // Regular Projectile
+        else {
           this.projectiles.addProjectile(this.tank.getX() + this.tank.getWidth()/2, this.tank.getY(), true, false);
         }
       }
 
-      // Extension
+      // Extension - to check if the konami code has been entered
       if (konamiChecker.checkKonami(e.getKeyCode())) {
         endGame();
         this.konami = !this.konami;
@@ -276,23 +334,27 @@ public class App extends PApplet {
     }
   }
 
+  // To transition to the next level
   public void nextLevel() {
     reset();
     this.swarm.nextLevel();
     this.nextLevel = true;
   }
 
+  // To restart the game
   public void endGame() {
     reset();
     this.swarm.endGame();
     this.currentScore = 0;
     this.gameOver = true;
 
-    // Extension
+    // Extension - restart the extension too
     this.konamiChecker.reset();
     konamiReset();
   }
 
+  // Resets the normal game to initial conditions (except objects that depend on
+  // whether it is a new level or new game)
   public void reset() {
     this.tank.reset();
     for (Barrier barrier : this.barriers) {
@@ -301,14 +363,14 @@ public class App extends PApplet {
     this.projectiles.reset();
   }
 
-  //Extension
-
+  //Extension - reset (no next level implemented)
   public void konamiReset() {
     this.konamiTank.reset();
     this.konamiInvaderSwarm.endGame();
     this.konamiProjectiles.reset();
   }
 
+  // Create App
   public static void main(String[] args) {
     PApplet.main("invadem.App");
   }

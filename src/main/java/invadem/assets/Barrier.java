@@ -1,3 +1,7 @@
+/*
+  Responsible for managing a whole barrier - asset group of 7 barrier components.
+*/
+
 package invadem.assets;
 
 import invadem.AssetGroup;
@@ -9,20 +13,24 @@ import java.util.List;
 import java.util.ArrayList;
 
 public class Barrier extends AssetGroup {
-
+  // Rows
   private List<BarrierComponent> topComponentRow;
   private List<BarrierComponent> middleComponentRow;
   private List<BarrierComponent> bottomComponentRow;
+  // If barrier is broken
   private boolean broken;
+  // Initial values stored for resetting
   private int xInitial;
   private int yInitial;
 
+  // Constants
   public static final int WIDTH_INITIAL = 24;
   public static final int HEIGHT_INITIAL = 24;
 
   public Barrier(List<PImage> left, List<PImage> top, List<PImage> right, List<PImage> solid, int x, int y) {
     super(x, y, WIDTH_INITIAL, HEIGHT_INITIAL, 3, 3, BarrierComponent.WIDTH, BarrierComponent.HEIGHT);
 
+    // Creating the rows
     this.topComponentRow = new ArrayList<BarrierComponent>();
     this.topComponentRow.add(new BarrierComponent(left, x, y));
     this.topComponentRow.add(new BarrierComponent(top, x + BarrierComponent.WIDTH, y));
@@ -40,6 +48,7 @@ public class Barrier extends AssetGroup {
   }
 
   public void draw(PApplet app) {
+    // Draw each row - and each component
     for (BarrierComponent component : this.topComponentRow) {
       if (component.isAlive()) {
         component.draw(app);
@@ -60,6 +69,7 @@ public class Barrier extends AssetGroup {
   }
 
   public void reset() {
+    // Reset each row - and each component
     for (BarrierComponent component : this.topComponentRow) {
       component.reset();
     }
@@ -84,6 +94,7 @@ public class Barrier extends AssetGroup {
     this.broken = false;
   }
 
+  // Getter Methods
   public boolean isBroken() {return this.broken;}
 
   public List<BarrierComponent> getTopComponentRow() {return this.topComponentRow;}
@@ -92,10 +103,11 @@ public class Barrier extends AssetGroup {
 
   public List<BarrierComponent> getBottomComponentRow() {return this.bottomComponentRow;}
 
+  // Function that checks if Minimum and Maximum x, y, row and col have changed
   public void checkBoundaries() {
     int i;
 
-    // Check leftCol
+    // Check if left-most column of barrier is destroyed
     if (this.leftCol == 0) {
       if (!(this.topComponentRow.get(0).isAlive() ||
             this.middleComponentRow.get(0).isAlive() ||
@@ -118,7 +130,7 @@ public class Barrier extends AssetGroup {
     }
 
 
-    // Check rightCol
+    // Check if right-most column of barrier is destroyed
     if (this.rightCol == 0) {
       if (!(this.topComponentRow.get(0).isAlive() ||
             this.middleComponentRow.get(0).isAlive() ||
@@ -141,7 +153,7 @@ public class Barrier extends AssetGroup {
     }
 
 
-    // Check topRow
+    // Check top-most row of barrier is destroyed
     for (i = 0; i < 3; i++) {
       if (this.topRow == 0) {
         if (this.topComponentRow.get(i).isAlive()) {
@@ -170,7 +182,7 @@ public class Barrier extends AssetGroup {
     }
 
 
-    // Check bottomRow
+    // Check bottom-most row of barrier is destroyed
     for (i = 0; i < 3; i++) {
       if (this.bottomRow == 0) {
         if (this.topComponentRow.get(i).isAlive()) {
@@ -204,10 +216,13 @@ public class Barrier extends AssetGroup {
     }
   }
 
+  // Check if projectile collides into barrier
   public int checkCollisionWithProjectile(Projectile projectile) {
     boolean checkCollision = false;
     boolean componentKilled = false;
 
+    // First check if it collides with entire barrier (using the Minimum and
+    // Maximum x and y values) - make the program slightly more efficient
     if (this.xLeft < (projectile.getX() + projectile.getWidth()) &&
         this.xRight > projectile.getX() &&
         this.yTop < (projectile.getY() + projectile.getHeight()) &&
@@ -215,6 +230,7 @@ public class Barrier extends AssetGroup {
       checkCollision = true;
     }
 
+    // If it collides with entire barrier - check each component
     if (checkCollision) {
       for (BarrierComponent component : this.topComponentRow) {
         if (component.isAlive() && projectile.checkCollisionWithAsset(component)) {
@@ -247,6 +263,8 @@ public class Barrier extends AssetGroup {
       }
     }
 
+    // If a component has been destroyed, check if Minimum and Maximum bounds
+    // need to be changed
     if (componentKilled) {
       checkBoundaries();
     }

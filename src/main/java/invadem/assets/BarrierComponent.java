@@ -1,3 +1,7 @@
+/*
+  Responsible for dealing with individual barrier components.
+*/
+
 package invadem.assets;
 
 import processing.core.PApplet;
@@ -26,6 +30,9 @@ public class BarrierComponent extends DrawableAsset {
     }
   }
 
+  // Check what image needs to be displayed - and if component is alive (if
+  // compoenent is dead we temporarily disable it by setting the image to null
+  // rather than removing it from memory entirely)
   public void checkHealth() {
     if (this.health <= 0) {
       this.img = null;

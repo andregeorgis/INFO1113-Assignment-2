@@ -1,3 +1,8 @@
+/*
+  Responsible for defining how every game asset should be defined in order to be
+  displayed correctly.
+*/
+
 package invadem;
 
 import processing.core.PApplet;
@@ -15,6 +20,8 @@ public abstract class DrawableAsset {
   protected PImage img;
   protected List<PImage> allImgs;
 
+  // Construction depending on whether the object requires animation (1 image or
+  // multiple images)
   public DrawableAsset(List<PImage> allImgs, int x, int y, int width, int height, int health) {
     this.x = x;
     this.y = y;
@@ -38,6 +45,7 @@ public abstract class DrawableAsset {
 
   public abstract void draw(PApplet app);
 
+  // Getter methods
   public int getX() {return this.x;}
 
   public int getY() {return this.y;}
@@ -50,6 +58,7 @@ public abstract class DrawableAsset {
 
   public PImage getImage() {return this.img;}
 
+  // Setter methods
   public void setX(int x) {this.x = x;}
 
   public void setY(int y) {this.y = y;}
@@ -60,10 +69,13 @@ public abstract class DrawableAsset {
 
   public void setHealth(int health) {this.health = health;}
 
+  // Change Image directly
   public void changeImage(PImage img) {this.img = img;}
 
+  // Change Image using other stored images - animation purposes
   public void changeImage(int index) {this.img = this.allImgs.get(index);}
 
+  // Asset health methods
   public boolean isAlive() {return this.health > 0;}
 
   public void loseHealth(int damage) {this.health -= damage;}

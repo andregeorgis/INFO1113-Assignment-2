@@ -1,3 +1,8 @@
+/*
+  Responsible for distinguishing between Projectile and TeslaSpike. TeslaSpike
+  is a component of TeslaCoil.
+*/
+
 package invadem.assets.extension;
 
 import invadem.assets.Projectile;
@@ -6,6 +11,7 @@ import processing.core.PApplet;
 import processing.core.PImage;
 
 public class TeslaSpike extends Projectile {
+  // Constants - major difference
   public static final int WIDTH = 14;
   public static final int HEIGHT = 20;
   public static final int X_VELOCITY = 0;

@@ -1,3 +1,7 @@
+/*
+  Responsible for distinguishing between Invader and TeslaInvader.
+*/
+
 package invadem.assets.extension;
 
 import invadem.assets.Invader;
@@ -17,9 +21,12 @@ public class TeslaInvader extends Invader {
     this.electrifyCounter = 0;
   }
 
+  // Only difference is that when TeslaInvader shoots it has a third image that
+  // is displayed.
   public void checkState() {
     super.checkState();
 
+    // Display third image if shooting
     if (this.electrify) {
       this.electrifyCounter++;
       changeImage(2);
@@ -36,10 +43,12 @@ public class TeslaInvader extends Invader {
     this.electrify = false;
   }
 
+  // Used to proc special image when shooting
   public void electrify() {
     this.electrify = true;
     this.electrifyCounter = 0;
   }
 
+  // Used to check if special image is displayed
   public boolean isElectrified() {return this.electrify;}
 }

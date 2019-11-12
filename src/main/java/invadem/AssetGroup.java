@@ -1,3 +1,8 @@
+/*
+  Responsible for defining how GROUPS of game assets should behave. These groups
+  must be in a grid format - i.e. explicit number of rows and columns
+*/
+
 package invadem;
 
 import invadem.assets.Projectile;
@@ -9,14 +14,17 @@ import java.util.List;
 import java.util.ArrayList;
 
 public abstract class AssetGroup {
+  // Minimum and Maximum x and y coords of group of assets
   protected int xLeft;
   protected int xRight;
   protected int yTop;
   protected int yBottom;
+  // Minimum and Maximum row and col of grid
   protected int leftCol;
   protected int rightCol;
   protected int topRow;
   protected int bottomRow;
+  // Dimensions of individual components of group
   protected int assetWidth;
   protected int assetHeight;
 
@@ -36,12 +44,14 @@ public abstract class AssetGroup {
 
   public abstract void draw(PApplet app);
 
+  // Check if the Maximum and Minimum x, y, row and col have changed
   public abstract void checkBoundaries();
 
   public abstract void reset();
 
   public abstract int checkCollisionWithProjectile(Projectile projectile);
 
+  // Getter Methods
   public int getXLeft() {return this.xLeft;}
 
   public int getXRight() {return this.xRight;}
@@ -62,6 +72,7 @@ public abstract class AssetGroup {
 
   public int getAssetHeight() {return this.assetHeight;}
 
+  // Setter Methods
   public void setXLeft(int xLeft) {this.xLeft = xLeft;}
 
   public void setXRight(int xRight) {this.xRight = xRight;}

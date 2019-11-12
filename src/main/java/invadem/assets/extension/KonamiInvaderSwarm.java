@@ -1,3 +1,8 @@
+/*
+  Responsible for distinguishing between InvaderSwarm and KonamiInvaderSwarm -
+  invaders in the Extension "secret level".
+*/
+
 package invadem.assets.extension;
 
 import invadem.assets.InvaderSwarm;
@@ -18,10 +23,12 @@ public class KonamiInvaderSwarm extends InvaderSwarm {
   public KonamiInvaderSwarm(List<PImage> invaderImgs) {
     super(invaderImgs);
     this.invaders = new ArrayList<Invader>();
+    // Grab images
     List<PImage> slimeImgs = invaderImgs.subList(0, 2);
     List<PImage> teslaImgs = invaderImgs.subList(2, 5);
     List<PImage> zurkonImgs = invaderImgs.subList(5, 7);
 
+    // Generate invaders
     for (int i = 0; i < 4; i++) {
       for (int j = 0; j < 10; j++) {
         if (i == 0) {
@@ -37,6 +44,7 @@ public class KonamiInvaderSwarm extends InvaderSwarm {
     this.projectileTimer = 0;
   }
 
+  // Like the original function, just no score change in the Extension
   public int checkCollisionWithProjectile(Projectile projectile) {
     boolean checkCollision = false;
     boolean invaderKilled = false;
@@ -67,6 +75,7 @@ public class KonamiInvaderSwarm extends InvaderSwarm {
     return 0;
   }
 
+  // Projectile shooting changed slightly - different types of projectiles
   public void checkIfKonamiShoot(KonamiCurrentProjectiles projectiles) {
     if (this.projectileTimer == PROJECTILE_RATE) {
       this.projectileTimer = 0;
@@ -88,12 +97,15 @@ public class KonamiInvaderSwarm extends InvaderSwarm {
     int projectileX = this.invaders.get(randInt).getX() + this.assetWidth / 2;
     int projectileY = this.invaders.get(randInt).getY() + this.assetHeight;
 
+    // We can shoot ZurkonProjectile, SlimeProjectile or TeslaCoil
     if (this.invaders.get(randInt) instanceof ZurkonInvader) {
       projectiles.addProjectile(projectileX - 1, projectileY, false, 'Z');
     } else if (this.invaders.get(randInt) instanceof SlimeInvader) {
       projectiles.addProjectile(projectileX - 2, projectileY, false, 'S');
     } else {
       projectiles.addProjectile(projectileX - 71, projectileY, false, 'T');
+
+      // Has a special animation when shooting
       TeslaInvader tempInvader = (TeslaInvader)this.invaders.get(randInt);
       tempInvader.electrify();
     }

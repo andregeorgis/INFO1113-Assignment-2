@@ -1,3 +1,8 @@
+/*
+  Responsible for dealing with all projectiles shot by both the tank and the
+  invaders.
+*/
+
 package invadem.assets;
 
 import processing.core.PImage;
@@ -7,9 +12,10 @@ import java.util.List;
 import java.util.ArrayList;
 
 public class CurrentProjectiles {
-
+  // Split friendly (Tank) and enemy (Invader) projectiles
   protected List<Projectile> friendlyProjectiles;
   protected List<Projectile> enemyProjectiles;
+  // Store all images
   private PImage projectileImg;
   private PImage powerProjectileImg;
 
@@ -21,6 +27,7 @@ public class CurrentProjectiles {
   }
 
   public void draw(PApplet app) {
+    // Draw each projectile separately
     for (Projectile projectile : this.friendlyProjectiles) {
       projectile.draw(app);
     }
@@ -30,10 +37,14 @@ public class CurrentProjectiles {
     }
   }
 
+  // Getter Methods
   public List<Projectile> getFriendlyProjectiles() {return this.friendlyProjectiles;}
 
   public List<Projectile> getEnemyProjectiles() {return this.enemyProjectiles;}
 
+  // Add Projectile
+  // boolean friendly - determines whether it is shot by tank or Invader
+  // boolean power - determines whether projectile is a PowerProjectile
   public void addProjectile(int x, int y, boolean friendly, boolean power) {
     if (friendly) {
       this.friendlyProjectiles.add(new Projectile(projectileImg, x, y));
@@ -49,6 +60,7 @@ public class CurrentProjectiles {
     }
   }
 
+  // Remove projectile if it is outside screen
   public void checkIfProjectilesOutside() {
     for (int i = 0; i < this.friendlyProjectiles.size(); i++) {
       if (this.friendlyProjectiles.get(i).isProjectileOutside()) {
@@ -65,10 +77,17 @@ public class CurrentProjectiles {
     }
   }
 
+  // Check if the projectiles collide with every other game object
   public int checkCollisions(InvaderSwarm swarm, Tank tank, List<Barrier> barriers) {
+    // Keep track of score from dead invaders
     int scoreChange = 0;
+
+    // For friendly projectiles
     for(Projectile projectile : this.friendlyProjectiles) {
+      // Check collision with invaders
       scoreChange += swarm.checkCollisionWithProjectile(projectile);
+
+      // Check collision with barriers
       for (Barrier barrier : barriers) {
         if (!barrier.isBroken()) {
           barrier.checkCollisionWithProjectile(projectile);
@@ -76,13 +95,19 @@ public class CurrentProjectiles {
       }
     }
 
+    // For enemy projectiles
     for(Projectile projectile : this.enemyProjectiles) {
+      // Check collision with tank
       projectile.checkCollisionWithAsset(tank);
+
+      // Check collision with barriers
       for (Barrier barrier : barriers) {
         if (!barrier.isBroken()) {
           barrier.checkCollisionWithProjectile(projectile);
         }
       }
+
+      // Check collision with friendly projectiles
       for (Projectile otherProjectile : this.friendlyProjectiles) {
         if (!otherProjectile.isDud()) {
           projectile.checkCollisionWithAsset(otherProjectile);
@@ -94,9 +119,11 @@ public class CurrentProjectiles {
       }
     }
 
+    // Return score obtained
     return scoreChange;
   }
 
+  // Reset projectiles by removing all
   public void reset() {
     this.friendlyProjectiles.clear();
     this.enemyProjectiles.clear();

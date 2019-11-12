@@ -1,3 +1,7 @@
+/*
+  Responsible for distinguishing between SlimeProjectiles and Projectiles.
+*/
+
 package invadem.assets.extension;
 
 import invadem.assets.Projectile;
@@ -6,7 +10,7 @@ import processing.core.PApplet;
 import processing.core.PImage;
 
 public class SlimeProjectile extends Projectile {
-
+  // Constants
   public final static int WIDTH = 5;
   public final static int HEIGHT = 5;
 

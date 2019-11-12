@@ -1,3 +1,7 @@
+/*
+  Responsible for defining behaviour of individual Invaders.
+*/
+
 package invadem.assets;
 
 import processing.core.PApplet;
@@ -7,17 +11,20 @@ import invadem.MovableAsset;
 import java.util.List;
 
 public class Invader extends MovableAsset {
+  // Constants
   public static final int WIDTH = 16;
   public static final int HEIGHT = 16;
   public static final int HEALTH_INITIAL = 1;
   public static final int X_VELOCITY_INITIAL = 1;
   public static final int Y_VELOCITY_INITIAL = 0;
 
+  // Variables to track animation
   protected int stepCounter;
   protected boolean movingDown;
   protected boolean movingRight;
   protected boolean movingLeft;
   protected boolean makeStep;
+  // Check if invader is alive
   protected boolean alive;
 
   public Invader(List<PImage> allImgs, int x, int y) {
@@ -37,6 +44,7 @@ public class Invader extends MovableAsset {
     }
   }
 
+  // Tick every 2nd frame
   public void tick() {
     if (this.makeStep) {
       checkState();
@@ -49,6 +57,8 @@ public class Invader extends MovableAsset {
     }
   }
 
+  // Little decision tree for how the invader should move (also changes Images
+  // for animation)
   public void checkState() {
     if (this.stepCounter == 30) {
       this.movingDown = true;
@@ -74,8 +84,10 @@ public class Invader extends MovableAsset {
     }
   }
 
+  // Taking step != Every frame (every 2nd frame)
   public void takeStep() {stepCounter++;}
 
+  // Checking health and status methods
   public boolean isAlive() {return this.alive;}
 
   public void checkHealth() {
@@ -84,11 +96,14 @@ public class Invader extends MovableAsset {
     }
   }
 
+  // If invader is killed we change the image to null - temporarily disable it
+  // rather than remove from memory
   public void kill() {
     changeImage(null);
     this.alive = false;
   }
 
+  // Reset all attributes
   public void reset(int x, int y) {
     changeImage(0);
     this.alive = true;
@@ -105,6 +120,7 @@ public class Invader extends MovableAsset {
     this.health = 1;
   }
 
+  // Getter Methods for testing purposes
   public boolean isMovingRight() {return this.movingRight;}
 
   public boolean isMovingDown() {return this.movingDown;}

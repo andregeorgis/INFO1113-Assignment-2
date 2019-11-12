@@ -1,3 +1,7 @@
+/*
+  Responsible for distinguishing between Invader and ZurkonInvader.
+*/
+
 package invadem.assets.extension;
 
 import invadem.assets.Invader;
@@ -10,6 +14,7 @@ public class ZurkonInvader extends Invader {
 
   public ZurkonInvader(List<PImage> allImgs, int x, int y) {
     super(allImgs, x, y);
+    // Only difference is health
     this.health = 3;
   }
 

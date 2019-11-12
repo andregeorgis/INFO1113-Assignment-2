@@ -1,3 +1,8 @@
+/*
+  Responsible for defining how game assets that can move should be defined in
+  order to be displayed correctly.
+*/
+
 package invadem;
 
 import processing.core.PImage;
@@ -10,6 +15,8 @@ public abstract class MovableAsset extends DrawableAsset {
   protected int xVelocity;
   protected int yVelocity;
 
+  // Construction depending on whether the object requires animation (1 image or
+  // multiple images)
   public MovableAsset(PImage img, int x, int y, int width, int height, int health, int xVelocity, int yVelocity) {
     super(img, x, y, width, height, health);
     this.xVelocity = xVelocity;
@@ -24,14 +31,17 @@ public abstract class MovableAsset extends DrawableAsset {
 
   public abstract void tick();
 
+  // Getter Methods
   public int getXVelocity() {return this.xVelocity;}
 
   public int getYVelocity() {return this.yVelocity;}
 
+  // Setter Methods
   public void setXVelocity(int velocity) {this.xVelocity = velocity;}
 
   public void setYVelocity(int velocity) {this.yVelocity = velocity;}
 
+  // Movement methods
   public void changeX() {this.x += this.xVelocity;}
 
   public void changeY() {this.y += this.yVelocity;}
